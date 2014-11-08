@@ -54,26 +54,36 @@
 
 		&.current {
 			display: block;
+			visibility: visible;
+		}
+
+		&.adiacent {
+			display: block;
+			visibility: hidden;
 		}
 
 		&.slideIn {
 			display: block;
+			visibility: visible;
 			@include animation(slideIn 0.8s);
 		}
 
 		&.slideOut {
 			display: block;
+			visibility: visible;
 			@include animation(slideOut 0.8s);
 		}
 
 
 		&.slideOutInv {
 			display: block;
+			visibility: visible;
 			@include animation(slideOutInv 0.8s);
 		}
 
 		&.slideInInv {
 			display: block;
+			visibility: visible;
 			@include animation(slideInInv 0.8s);
 		}
 	}

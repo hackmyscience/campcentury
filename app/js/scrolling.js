@@ -79,6 +79,10 @@ var Scrolling = function(slides){
 
 		});
 
+		$('.adiacent').removeClass('adiacent');
+		this.getSlide(destination-1).addClass('adiacent');
+		this.getSlide(destination+1).addClass('adiacent');
+
 		this.currentSlide = destination;
 	};
 
