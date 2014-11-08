@@ -33,13 +33,15 @@ var Scrolling = function(slides){
 
 		this.animating = true;
 
-		var oldSlide = this.getSlide( this.currentSlide ),
+		var oldSlideN = this.currentSlide,
+			oldSlide = this.getSlide( this.currentSlide ),
 			newSlide = this.getSlide( destination ),
 			self = this;
 
 		$(document).trigger('scrolling:change', {
 			newSlide: destination,
-			oldSlide: this.currentSlide
+			oldSlide: this.currentSlide,
+			status: 'start'
 		});
 
 		var enterAnim = destination > this.currentSlide ? 'slideIn' : 'slideInInv',
@@ -52,6 +54,13 @@ var Scrolling = function(slides){
 		newSlide.addClass(exitAnim).on(animationEnd, function(){
 			$(this).off(animationEnd).removeClass(exitAnim).addClass('current');
 			self.animating = false;
+
+			$(document).trigger('scrolling:change', {
+				newSlide: destination,
+				oldSlide: oldSlideN,
+				status: 'end'
+			});
+
 		});
 
 		this.currentSlide = destination;
