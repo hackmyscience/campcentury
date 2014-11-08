@@ -47,7 +47,7 @@ var Snow = function (options) {
 	resizables.push(target);
 
 	backgroundImage = document.createElement('img');
-	backgroundImage.src = 'images/cc_title_background.jpeg';
+	backgroundImage.src = 'images/ccTitleBackgroundCropped.jpg';
 	reformatBackground = seriously.transform('reformat');
 	reformatBackground.source = backgroundImage;
 	reformatBackground.mode = 'cover';
@@ -60,7 +60,7 @@ var Snow = function (options) {
 
 	//todo: set up displacement node
 	depthMap = document.createElement('img');
-	depthMap.src = 'images/cc_title_background_depth.jpeg';
+	depthMap.src = 'images/ccTitleBackgroundDepth.jpg';
 	reformatDepth = seriously.transform('reformat');
 	reformatDepth.source = depthMap;
 	reformatDepth.mode = 'cover';
