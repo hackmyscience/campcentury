@@ -43,7 +43,6 @@ var Snow = function (options) {
 		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
 
 		displace.mapScale = props.mapScale;
-		//displace.amount = 0.2 * x / window.innerWidth - 0.1;
 	}
 
 	seriously = new Seriously();
@@ -60,6 +59,7 @@ var Snow = function (options) {
 	reformatBackground.mode = 'cover';
 	resizables.push(reformatBackground);
 
+	//todo: remove saturation effect. do it in photoshop instead
 	saturation = seriously.effect('hue-saturation');
 	saturation.source = reformatBackground;
 	saturation.hue = 0;
