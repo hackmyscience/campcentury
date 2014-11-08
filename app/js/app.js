@@ -20,11 +20,30 @@ function resize() {
 	//todo: throttle/bounce resize
 }
 
+
+
+function handleScroll(e, delta, deltaX, deltaY){
+	e.preventDefault();
+
+
+	if(deltaY >= 1){
+		Scrolling.goPrev();
+	}
+
+	if(deltaY < 1){
+		Scrolling.goNext();
+	}
+}
+
 var Scrolling = new Scrolling ([
 	'slide-1',
 	'slide-2',
 	'slide-3'
 ]);
+
+Scrolling.canScroll = true;
+
+$(window).on('mousewheel', _.throttle(handleScroll, 1700, { leading: true, trailing: false }));
 
 document.onkeyup = function(event) {
     event = event || window.event;
@@ -52,7 +71,7 @@ $("#remove").on('click', function(){
 	Scrolling.remove(0);
 });
 
-$(window).on('resize', resize);
+$(window).on('resize', _.throttle(resize, 100));
 
 resize();
 manager.go();

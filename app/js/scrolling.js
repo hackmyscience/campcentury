@@ -4,6 +4,7 @@ var Scrolling = function(slides){
 	this.slides = slides;
 	this.currentSlide = 0;
 	this.animating = false;
+	this.canScroll = false;
 
 	this.add = function(id, index){
 		if(index == this.currentSlide){
@@ -43,7 +44,7 @@ var Scrolling = function(slides){
 	};
 
 	this.jumpTo = function(destination){
-		if( destination >= this.slides.length || destination < 0 || destination === this.currentSlide || this.animating) {
+		if( destination >= this.slides.length || destination < 0 || destination === this.currentSlide || this.animating || !this.canScroll) {
 			return false;
 		}
 
