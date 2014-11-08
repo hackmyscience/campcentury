@@ -1,5 +1,5 @@
 var Snow = function (options) {
-	var DISPLACE_AMOUNT = 0.12,
+	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
 		PAN_AMOUNT = 0.05,
 		VERTICAL_DISPLACE = 0.3,
 		FOG_SCALE = 1 / 2,
@@ -8,8 +8,6 @@ var Snow = function (options) {
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
 		seriously,
-		backgroundImage,
-		depthMap,
 		canvas,
 
 		//seriously nodes
@@ -62,10 +60,8 @@ var Snow = function (options) {
 	target = seriously.target(canvas);
 	resizables.push(target);
 
-	backgroundImage = document.createElement('img');
-	backgroundImage.src = 'images/ccTitleBackgroundCropped.jpg';
 	reformatBackground = seriously.transform('reformat');
-	reformatBackground.source = backgroundImage;
+	reformatBackground.source = '#title-image';
 	reformatBackground.mode = 'cover';
 	resizables.push(reformatBackground);
 
@@ -76,10 +72,8 @@ var Snow = function (options) {
 	saturation.saturation = 0.3;
 
 	//todo: set up displacement node
-	depthMap = document.createElement('img');
-	depthMap.src = 'images/ccTitleBackgroundDepth.jpg';
 	reformatDepth = seriously.transform('reformat');
-	reformatDepth.source = depthMap;
+	reformatDepth.source = '#title-depth';
 	reformatDepth.mode = 'cover';
 	resizables.push(reformatDepth);
 
