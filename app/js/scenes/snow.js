@@ -33,7 +33,8 @@ var Snow = function (options) {
 			slope: [1, 1, 1, 1],
 			intercept: [0.8, 0.8, 0.8, 1],
 			mapScale: [0, 0]
-		};
+		},
+		introText = $("#slide-1 .title")[0];
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
@@ -43,6 +44,12 @@ var Snow = function (options) {
 		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
 
 		displace.mapScale = props.mapScale;
+
+		//x, istart, istop, ostart, ostop
+
+		var textX = normalize(x, 0, window.innerWidth, -10, 10);
+
+		introText.style.transform = "translate("+(-(window.innerWidth/2) + textX)+"px, "+(-40)+"px)";
 	}
 
 	seriously = new Seriously();

@@ -1,3 +1,4 @@
+require('./utils.js');
 require('./scrolling.js');
 require('./scenemanager.js');
 require('./scenes/snow.js');
