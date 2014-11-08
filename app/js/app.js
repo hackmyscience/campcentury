@@ -20,6 +20,13 @@ document.onkeyup = function(event) {
     }
 };
 
-$(document).on("scrolling:change", function(e, info){
+$(document).on('scrolling:change', function(e, info){
 	console.log(info);
+});
+
+$("#add").on('click', function(){
+	Scrolling.add('slide-4');
+});
+$("#remove").on('click', function(){
+	Scrolling.remove(0);
 });

@@ -1,21 +1,37 @@
 var animationEnd = "animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd";
 
 var Scrolling = function(slides){
+	this.slides = slides;
 	this.currentSlide = 0;
-
-	this.slides = slides || [];
 	this.animating = false;
 
 	this.add = function(id, index){
+		if(index == this.currentSlide){
+			return false; //todo: allow to remove the current slide
+		}
 
 		if(!index) {
 			index = this.slides.length;
 		}
 
+		this.slides.splice(index, 0, id);
+
+		if(index < this.currentSlide){
+			this.currentSlide++;
+		}
+
 	};
 
 	this.remove = function(index){
+		if(index == this.currentSlide){
+			return false; //todo: allow to remove the current slide
+		}
 
+		this.slides.splice(index, 1);
+		
+		if(index < this.currentSlide){
+			this.currentSlide--;
+		}
 	};
 
 	this.goNext = function(){
@@ -26,7 +42,7 @@ var Scrolling = function(slides){
 		this.jumpTo(this.currentSlide-1);
 	};
 
-	this.jumpTo = function( destination ){
+	this.jumpTo = function(destination){
 		if( destination >= this.slides.length || destination < 0 || destination === this.currentSlide || this.animating) {
 			return false;
 		}
@@ -66,7 +82,7 @@ var Scrolling = function(slides){
 		this.currentSlide = destination;
 	};
 
-	this.getSlide = function( n ){
+	this.getSlide = function(n){
 		return $('#'+this.slides[n]);
 	};
 
