@@ -1,5 +1,5 @@
 var Snow = function (options) {
-	var DISPLACE_AMOUNT = 0.12,
+	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
 		PAN_AMOUNT = 0.05,
 		VERTICAL_DISPLACE = 0.3,
 		FOG_SCALE = 1 / 2,
