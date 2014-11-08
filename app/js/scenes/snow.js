@@ -3,6 +3,7 @@ var Snow = function (options) {
 		PAN_AMOUNT = 0.05,
 		VERTICAL_DISPLACE = 0.3,
 		FOG_SCALE = 1 / 2,
+		FADE_DURATION = 6000,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
@@ -14,7 +15,6 @@ var Snow = function (options) {
 		//seriously nodes
 		transfer,
 		simplex,
-		channels,
 		saturation,
 		blend,
 		displace,
@@ -27,11 +27,14 @@ var Snow = function (options) {
 
 		resizables = [],
 
+		//state variables
+		lastRender = 0,
+		revealRemaining = 1,
 		start = Date.now() / 1000,
 		noiseOffset = [0, 0],
 		props = {
 			slope: [1, 1, 1, 1],
-			intercept: [0.8, 0.8, 0.8, 1],
+			intercept: [1, 1, 1, 1],
 			mapScale: [0, 0]
 		},
 		introText = $("#slide-1 .title")[0];
@@ -97,25 +100,18 @@ var Snow = function (options) {
 	simplex.black = [0.0, 0.0, 0.0, 1];
 	//resizables.push(simplex);
 
-	reformatNoise = seriously.transform('reformat');
-	reformatNoise.source = simplex;
-	resizables.push(reformatNoise);
-
-	//adjust "distance" of fog by moving depth channel value up/down
 	transfer = seriously.effect('linear-transfer');
-	transfer.source = reformatDepth;
+	transfer.source = simplex;
 	transfer.slope = props.slope;
 	transfer.intercept = props.intercept;
 
-	//set depth value as alpha channel of fog
-	channels = seriously.effect('channels');
-	channels.source = reformatNoise; //simplex;
-	channels.alphaSource = transfer;
-	channels.alpha = 'red';
+	reformatNoise = seriously.transform('reformat');
+	reformatNoise.source = transfer;
+	resizables.push(reformatNoise);
 
 	//apply fog to image with "screen" blend mode
 	blend = seriously.effect('blend');
-	blend.top = channels;
+	blend.top = reformatNoise;
 	blend.bottom = scale;
 	blend.mode = 'screen';
 
@@ -133,14 +129,26 @@ var Snow = function (options) {
 			simplex.height = height * FOG_SCALE;
 		},
 		render: function () {
-			var time = (Date.now() / 1000 - start) % 1000;
+			var now = Date.now(),
+				time = (now / 1000 - start) % 1000;
 			simplex.time = time / 10;
 
 			//animate wind blowing fog
 			noiseOffset[0] = time * 0.2 - props.mapScale[0] / 2;
 			simplex.noiseOffset = noiseOffset;
 
+			//lower fog
+			if (revealRemaining && lastRender) {
+				revealRemaining = Math.max(0, revealRemaining -  (now - lastRender) / FADE_DURATION);
+				//console.log(now, lastRender, now - lastRender, revealRemaining);
+				props.intercept[0] = revealRemaining;
+				props.intercept[1] = revealRemaining;
+				props.intercept[2] = revealRemaining;
+				transfer.intercept = props.intercept;
+			}
+
 			seriously.render();
+			lastRender = now;
 		}
 	};
 };
