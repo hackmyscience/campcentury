@@ -1,0 +1,11 @@
+#loading {
+	@include get-all-space;
+	z-index: 100;
+	background-color: #fff;
+}
+
+#loading .loader {
+	@include square(16);
+	@include center_xy;
+	background-image: url('../images/loader.gif');
+}

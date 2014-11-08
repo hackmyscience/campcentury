@@ -1,0 +1,12 @@
+#slide-1 {
+	background-color: #fff;
+
+	.title {
+		@include center_xy;
+		@include size(font-size, 80);
+		text-align: center;
+		color: #fff;
+		width: 100%;
+		font-family: 'Merriweather';
+	}	
+}
