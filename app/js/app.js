@@ -15,7 +15,8 @@ manager.add(Snow, {
 manager.activate(0);
 
 function resize() {
-	manager.resize(window.innerWidth, window.innerHeight);
+	var dpr = window.devicePixelRatio || 1;
+	manager.resize(window.innerWidth * dpr, window.innerHeight * dpr);
 
 	//todo: throttle/bounce resize
 }
