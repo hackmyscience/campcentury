@@ -1,5 +1,6 @@
 #loading {
 	@include get-all-space;
+	@include transition(opacity 0.4s);
 	z-index: 100;
 	background-color: #fff;
 }

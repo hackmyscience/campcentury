@@ -69,7 +69,8 @@ module.exports = function(grunt) {
             options: {
                 template: "{%= src %}",
                 separator: '\n\n /* --------------------------- */ \n\n',
-                includeSourceMap: false
+                includeSourceMap: false,
+                skipFiles: ['wolfy87-eventemitter', 'eventie']
             },
             dev: {
                 src: '<%= paths.src %>/js/app.js',

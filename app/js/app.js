@@ -13,12 +13,18 @@ var scenes = [];
 manager.add(Snow, {
 	container: $("#slide-1")[0]
 });
-manager.activate(0);
+
+imagesLoaded( document.querySelector('#slide-1'), function( instance ) {
+	$("#loading").css('opacity', 0).on(transitionEnd, function(){
+		$(this).remove();
+	});
+
+	manager.activate(0);
+});
 
 function resize() {
 	var dpr = window.devicePixelRatio || 1;
 	manager.resize(window.innerWidth * dpr, window.innerHeight * dpr);
-
 	//todo: throttle/bounce resize
 }
 

@@ -1,5 +1,3 @@
-var animationEnd = "animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd";
-
 var Scrolling = function(slides){
 	this.slides = slides;
 	this.currentSlide = 0;

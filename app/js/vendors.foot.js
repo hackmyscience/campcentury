@@ -7,6 +7,7 @@ require('./vendors/pixi-particles.js');
 require('./vendors/lodash.js');
 require('./vendors/stats.js');
 require('./vendors/DepthyViewer.js');
+require('./vendors/imagesloaded.js');
 
 //seriously.js and related effects
 require('./vendors/seriously.js');
