@@ -1,5 +1,7 @@
 var Snow = function (options) {
-	var seriously,
+	var DISPLACE_AMOUNT = 0.08,
+
+		seriously,
 		backgroundImage,
 		depthMap,
 		canvas,
@@ -10,8 +12,9 @@ var Snow = function (options) {
 		channels,
 		saturation,
 		blend,
-		//blendalpha,
+		displace,
 		target,
+		scale,
 
 		reformatBackground,
 		reformatDepth,
@@ -25,6 +28,16 @@ var Snow = function (options) {
 			intercept: [1, 1, 1, 1]
 		};
 
+	function mouseMove(evt) {
+		var x = evt.pageX,
+			y = evt.pageY;
+
+		displace.mapScale = [
+			-DISPLACE_AMOUNT * x / window.innerWidth - DISPLACE_AMOUNT / 2,
+			(DISPLACE_AMOUNT * y / window.innerHeight - DISPLACE_AMOUNT / 2)
+		];
+		//displace.amount = 0.2 * x / window.innerWidth - 0.1;
+	}
 
 	seriously = new Seriously();
 
@@ -45,13 +58,23 @@ var Snow = function (options) {
 	saturation.hue = 0;
 	saturation.saturation = 0.3;
 
-	//todo: load depth map and set up displacement node
+	//todo: set up displacement node
 	depthMap = document.createElement('img');
 	depthMap.src = 'images/cc_title_background_depth.jpeg';
 	reformatDepth = seriously.transform('reformat');
 	reformatDepth.source = depthMap;
 	reformatDepth.mode = 'cover';
 	resizables.push(reformatDepth);
+
+	displace = seriously.effect('displacement');
+	displace.source = saturation;
+	displace.map = reformatDepth;
+	displace.mapScale = [0, 0];
+	displace.offset = 1.05;
+
+	scale = seriously.transform('2d');
+	scale.source = displace;
+	scale.scale(1 + DISPLACE_AMOUNT * 4);
 
 	//generate "fog" with simplex noise
 	simplex = seriously.effect('simplex');
@@ -75,11 +98,12 @@ var Snow = function (options) {
 	//apply fog to image with "screen" blend mode
 	blend = seriously.effect('blend');
 	blend.top = channels;
-	blend.bottom = saturation;
+	blend.bottom = scale;
 	blend.mode = 'screen';
 
 	target.source = blend; //blend;
 
+	window.addEventListener('mousemove', mouseMove, false);
 
 	return {
 		resize: function (width, height) {
