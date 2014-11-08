@@ -699,17 +699,23 @@ Copyright (c) 2014 Rafał Lindemann. http://panrafal.github.com/depthy
     }
 
     var lastLoopTime = 0;
+    var elapsed = Date.now();
     function renderLoop() {
+      requestAnimFrame( renderLoop );
+
       if (!options.pauseRender) {
         quality.ms = lastLoopTime && (getNow() - lastLoopTime);
-        lastLoopTime = getNow();
-
+        
         stats && stats.begin();
-        emitter.update(getNow() - lastLoopTime * 0.001);
+        
+        var now = Date.now();
+        emitter.update((now - elapsed) * 0.001);
+        elapsed = now;
+
         render();
+        
         stats && stats.end();
       }
-      requestAnimFrame( renderLoop );
     }
 
     // PUBLIC FUNCTIONS
