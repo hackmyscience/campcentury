@@ -1,5 +1,9 @@
 var Snow = function (options) {
-	var DISPLACE_AMOUNT = 0.08,
+	var DISPLACE_AMOUNT = 0.12,
+		PAN_AMOUNT = 0.05,
+		VERTICAL_DISPLACE = 0.3,
+
+		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
 		seriously,
 		backgroundImage,
@@ -25,17 +29,18 @@ var Snow = function (options) {
 		noiseOffset = [0, 0],
 		props = {
 			slope: [1, 1, 1, 1],
-			intercept: [1, 1, 1, 1]
+			intercept: [1, 1, 1, 1],
+			mapScale: [0, 0]
 		};
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
 			y = evt.pageY;
 
-		displace.mapScale = [
-			-DISPLACE_AMOUNT * x / window.innerWidth - DISPLACE_AMOUNT / 2,
-			(DISPLACE_AMOUNT * y / window.innerHeight - DISPLACE_AMOUNT / 2)
-		];
+		props.mapScale[0] = -DISPLACE_AMOUNT * 2 * (x / window.innerWidth - 0.5);
+		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
+
+		displace.mapScale = props.mapScale;
 		//displace.amount = 0.2 * x / window.innerWidth - 0.1;
 	}
 
@@ -70,11 +75,11 @@ var Snow = function (options) {
 	displace.source = saturation;
 	displace.map = reformatDepth;
 	displace.mapScale = [0, 0];
-	displace.offset = 1.05;
+	displace.offset = 1.03 + PAN_AMOUNT;
 
 	scale = seriously.transform('2d');
 	scale.source = displace;
-	scale.scale(1 + DISPLACE_AMOUNT * 4);
+	scale.scale(1 + totalOffset);
 
 	//generate "fog" with simplex noise
 	simplex = seriously.effect('simplex');
@@ -113,11 +118,11 @@ var Snow = function (options) {
 			});
 		},
 		render: function () {
-			//animate fog
 			var time = (Date.now() / 1000 - start) % 1000;
-			//simplex.time = time / 10;
+			simplex.time = time / 10;
 
-			noiseOffset[0] = time / 5;
+			//animate wind blowing fog
+			noiseOffset[0] = time * 0.2 - props.mapScale[0] / 2;
 			simplex.noiseOffset = noiseOffset;
 
 			seriously.render();
