@@ -1,6 +1,11 @@
 require('./scrolling.js');
 
-var Scrolling = new Scrolling("#scrolling section");
+var Scrolling = new Scrolling ([
+	'slide-1',
+	'slide-2',
+	'slide-3'
+]);
+
 document.onkeyup = function(event) {
     event = event || window.event;
     switch (event.keyCode || event.which) {

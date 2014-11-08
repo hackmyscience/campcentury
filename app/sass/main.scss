@@ -1,28 +1,93 @@
-#viewer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
-
-#viewer canvas {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-}
-
+@import "compass/reset";
+@import "compass/css3";
 @import "mixins";
+
+@include keyframes(slideOut){
+	from {
+		@include transform(translateY(100%));
+	}
+
+	to {
+		@include transform(translateY(0%));
+	}
+}
+
+@include keyframes(slideIn) {
+	from {
+		@include transform(translateY(0%));
+	}
+
+	to {
+		@include transform(translateY(-100%));
+	}
+}
+
+
+@include keyframes(slideInInv){
+	from {
+		@include transform(translateY(0%));
+	}
+
+	to {
+		@include transform(translateY(100%));
+	}
+}
+
+@include keyframes(slideOutInv) {
+	from {
+		@include transform(translateY(-100%));
+	}
+
+	to {
+		@include transform(translateY(0%));
+	}
+}
 
 #scrolling {
 	@include get-all-space;
+	overflow: hidden;
 
 	section {
 		@include get-all-space;
+		overflow: hidden;
 		display: none;
+
+		&.current {
+			display: block;
+		}
+
+		&.slideIn {
+			display: block;
+			@include animation(slideIn 0.8s);
+		}
+
+		&.slideOut {
+			display: block;
+			@include animation(slideOut 0.8s);
+		}
+
+
+		&.slideOutInv {
+			display: block;
+			@include animation(slideOutInv 0.8s);
+		}
+
+		&.slideInInv {
+			display: block;
+			@include animation(slideInInv 0.8s);
+		}
 	}
 
-	section.current {
-		display: block;
-	}
+}
+
+#slide-1 {
+	background-color: red;
+}
+
+#slide-2 {
+	background-color: yellow;
+}
+
+#slide-3 {
+	background-color: blue;
 }
