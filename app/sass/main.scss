@@ -11,3 +11,18 @@
 	left: 50%;
 	top: 50%;
 }
+
+@import "mixins";
+
+#scrolling {
+	@include get-all-space;
+
+	section {
+		@include get-all-space;
+		display: none;
+	}
+
+	section.current {
+		display: block;
+	}
+}

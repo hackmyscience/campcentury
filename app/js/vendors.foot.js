@@ -1,4 +1,6 @@
 require('./vendors/jquery.js');
+require('./vendors/jquery-mousewheel.js');
+require('./vendors/native.history.js');
 require('./vendors/pixi.dev.js');
 require('./vendors/pixi.utils.js');
 require('./vendors/pixi-particles.js');
