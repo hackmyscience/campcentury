@@ -2,6 +2,7 @@ var Snow = function (options) {
 	var DISPLACE_AMOUNT = 0.12,
 		PAN_AMOUNT = 0.05,
 		VERTICAL_DISPLACE = 0.3,
+		FOG_SCALE = 1 / 2,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
@@ -22,6 +23,7 @@ var Snow = function (options) {
 
 		reformatBackground,
 		reformatDepth,
+		reformatNoise,
 
 		resizables = [],
 
@@ -29,7 +31,7 @@ var Snow = function (options) {
 		noiseOffset = [0, 0],
 		props = {
 			slope: [1, 1, 1, 1],
-			intercept: [1, 1, 1, 1],
+			intercept: [0.8, 0.8, 0.8, 1],
 			mapScale: [0, 0]
 		};
 
@@ -86,7 +88,11 @@ var Snow = function (options) {
 	simplex.octaves = 3;
 	simplex.noiseScale = [1, 2.5];
 	simplex.black = [0.0, 0.0, 0.0, 1];
-	resizables.push(simplex);
+	//resizables.push(simplex);
+
+	reformatNoise = seriously.transform('reformat');
+	reformatNoise.source = simplex;
+	resizables.push(reformatNoise);
 
 	//adjust "distance" of fog by moving depth channel value up/down
 	transfer = seriously.effect('linear-transfer');
@@ -96,7 +102,7 @@ var Snow = function (options) {
 
 	//set depth value as alpha channel of fog
 	channels = seriously.effect('channels');
-	channels.source = simplex;
+	channels.source = reformatNoise; //simplex;
 	channels.alphaSource = transfer;
 	channels.alpha = 'red';
 
@@ -116,6 +122,8 @@ var Snow = function (options) {
 				node.width = width;
 				node.height = height;
 			});
+			simplex.width = width * FOG_SCALE;
+			simplex.height = height * FOG_SCALE;
 		},
 		render: function () {
 			var time = (Date.now() / 1000 - start) % 1000;
