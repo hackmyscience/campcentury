@@ -1,0 +1,142 @@
+/*
+@include keyframes(slideOut){
+	from {
+		@include transform(translateY(100%));
+	}
+
+	to {
+		@include transform(translateY(0%));
+	}
+}
+
+@include keyframes(slideIn) {
+	from {
+		@include transform(translateY(0%));
+	}
+
+	to {
+		@include transform(translateY(-100%));
+	}
+}
+
+
+@include keyframes(slideInInv){
+	from {
+		@include transform(translateY(0%));
+	}
+
+	to {
+		@include transform(translateY(100%));
+	}
+}
+
+@include keyframes(slideOutInv) {
+	from {
+		@include transform(translateY(-100%));
+	}
+
+	to {
+		@include transform(translateY(0%));
+	}
+}*/
+
+@include keyframes(slideOut){
+	from {
+		@include opacity(0);
+	}
+
+	to {
+		@include opacity(1);
+	}
+}
+
+@include keyframes(slideIn){
+	from {
+		@include opacity(1);
+	}
+
+	to {
+		@include opacity(0);
+	}
+}
+
+
+@include keyframes(slideInInv){
+	from {
+		@include opacity(1);
+	}
+
+	to {
+		@include opacity(0);
+	}
+}
+
+@include keyframes(slideOutInv) {
+	from {
+		@include opacity(0);
+	}
+
+	to {
+		@include opacity(1);
+	}
+}
+
+#scrolling {
+	@include get-all-space;
+	overflow: hidden;
+
+	section {
+		@include get-all-space;
+		overflow: hidden;
+		display: none;
+
+		&.current {
+			display: block;
+			visibility: visible;
+		}
+
+		&.adiacent {
+			display: block;
+			visibility: hidden;
+		}
+
+		&.slideIn {
+			display: block;
+			visibility: visible;
+			@include animation(slideIn 0.8s);
+		}
+
+		&.slideOut {
+			display: block;
+			visibility: visible;
+			@include animation(slideOut 0.8s);
+		}
+
+
+		&.slideOutInv {
+			display: block;
+			visibility: visible;
+			@include animation(slideOutInv 0.8s);
+		}
+
+		&.slideInInv {
+			display: block;
+			visibility: visible;
+			@include animation(slideInInv 0.8s);
+		}
+	}
+
+}
+
+
+#slide-2 {
+	background-color: yellow;
+}
+
+#slide-3 {
+	background-color: blue;
+}
+
+#slide-4 {
+	background-color: violet;
+}

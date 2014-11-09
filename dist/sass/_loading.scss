@@ -1,0 +1,16 @@
+#loading {
+	@include get-all-space;
+	@include transition(opacity 0.4s);
+	z-index: 100;
+	background-color: #fff;
+}
+
+#loading .loader {
+	@include square(16);
+	@include center_xy;
+	background-image: url('../images/loader.gif');
+}
+
+#image-textures > img {
+	display: none;
+}

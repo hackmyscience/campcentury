@@ -1,0 +1,99 @@
+#intro {
+	background-color: #fff;
+
+	.title {
+		@include center_xy;
+		@include opacity(0.5);
+		text-align: center;
+		color: #fff;
+		width: 100%;
+		font-family: 'Merriweather';
+
+		h1 {
+			@include size(font-size, 80);
+		}
+
+		h2 {
+			@include size(font-size, 20);
+			@include size(margin-top, 15);
+		}
+	}
+	
+	.scroll-stuff {
+		@include opacity(0);
+		@include transition(opacity 0.6s);
+	}
+
+	.scrollMouse {
+		@include size(width, 25);
+		@include size(height, 40);
+		@include center_x;
+		@include size(bottom, 75);
+		@include transition(opacity 0.3s);
+		display: block;
+		background-image: url('../images/mouse.png');
+	}
+
+	.scrollKeyboard {
+		@include size(width, 54);
+		@include size(height, 35);
+		@include center_x;
+		@include size(bottom, 75);
+		@include transition(opacity 0.3s);
+		display: block;
+		background-image: url('../images/keyboard.png');
+
+		@include opacity(0);
+	}
+
+	.scrolldownArea {
+		@include square(80);
+		@include transform(translateX(-50%));
+		position: absolute;
+		left: 50%;
+		bottom: 0;
+		cursor: pointer;
+
+		span {
+			@include size(width, 21);
+			@include size(height, 11);
+			@include animation(pulsebottom 3s ease-in-out infinite);
+			@include size(left, 30);
+			@include size(top, 30);
+			position: absolute;
+			display: block;
+			background-image: url('../images/scrolldown.png');
+		}
+	}
+
+
+}
+
+
+@include keyframes(pulsebottom) {
+    0% {
+      @include opacity(1);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+    30% {
+      @include opacity(0);
+      @include transform(scale(0.7));
+      @include transform(translateY(25px));
+    }
+    35% {
+      @include opacity(0);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+    50% {
+      @include opacity(1);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+    100% {
+      @include opacity(1);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+}

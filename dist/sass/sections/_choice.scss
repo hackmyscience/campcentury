@@ -1,0 +1,99 @@
+#choice {
+		
+	.text {
+		@include center_xy;
+		@include size(font-size, 30);
+		@include size(line-height, 50);
+		color: #fff;
+		width: 80%;
+		text-align: center;
+
+		.fill {
+			@include size(top, 6);
+			@include transition(background 0.3s);
+			position: relative;
+			background-color: #fff;
+			display: inline-block;
+			width: 380px;
+			height: 30px;
+			text-align: center;
+		}
+		.fill-1 {
+			@include size(width, 380);
+		}
+		.fill-2 {
+			@include size(width, 420);
+		}
+
+		.fill-3 {
+			@include size(width, 410);
+		}
+
+		span {
+			position: absolute;
+			display: block;
+			text-align: center;
+			width: 100%;
+			height: inherit;
+			text-decoration: underline;
+			@include transform(translateZ(0));
+			@include size(line-height, 30);
+			@include opacity(0);
+			@include filter(blur(10px));
+			@include transition(opacity 0.3s, filter 0.3s);
+		}
+	}
+
+	.text.choice1 {
+		.fill {
+			background-color: transparent;
+		}
+		span.word-1 {
+			@include opacity(1);
+			@include filter(blur(0px));
+		}
+	}
+	
+	.text.choice2 {
+		.fill {
+			background-color: transparent;
+		}
+		span.word-2 {
+			@include opacity(1);
+			@include filter(blur(0px));
+		}
+	}
+	
+	.text.choice3 {
+		.fill {
+			background-color: transparent;
+		}
+		span.word-3 {
+			@include opacity(1);
+			@include filter(blur(0px));
+		}
+	}
+
+	.choices {
+		@include center_x;
+		text-align: center;
+		width: 81%;
+		bottom: 0;
+
+		li {
+			@include size(height, 80);
+			width: 27%;
+			display: inline-block;
+			position: relative;
+			cursor: pointer;
+
+			span {
+				@include size(width, 21);
+				@include size(height, 11);
+				@include center_xy;
+				display: block;
+				background-image: url('../images/scrolldown.png');
+			}
+		}
+	}
+}
