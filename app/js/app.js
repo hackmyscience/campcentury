@@ -44,6 +44,7 @@ function setUpScenes() {
 			scene.key = k;
 			scene.options.container = $("#" + k)[0];
 			scene.scene = new SceneManager.Scene(scene.definition, scene.options);
+			
 			if (!scene.delay) {
 				addScene(k, scene.index);
 			}

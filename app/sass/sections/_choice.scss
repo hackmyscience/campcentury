@@ -10,6 +10,7 @@
 
 		.fill {
 			@include size(top, 6);
+			@include transition(background 0.3s);
 			position: relative;
 			background-color: #000;
 			display: inline-block;
@@ -33,28 +34,36 @@
 			display: block;
 			text-align: center;
 			width: 100%;
-			font-weight: 600;
 			height: inherit;
+			text-decoration: underline;
 			@include size(line-height, 25);
-			@include size(font-size, 25);
 			@include opacity(0);
 			@include transition(opacity 0.3s);
 		}
 	}
 
 	.text.choice1 {
+		.fill {
+			background-color: transparent;
+		}
 		span.word-1 {
 			@include opacity(1);
 		}
 	}
 	
 	.text.choice2 {
+		.fill {
+			background-color: transparent;
+		}
 		span.word-2 {
 			@include opacity(1);
 		}
 	}
 	
 	.text.choice3 {
+		.fill {
+			background-color: transparent;
+		}
 		span.word-3 {
 			@include opacity(1);
 		}
