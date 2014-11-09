@@ -24,6 +24,15 @@ var Choice = function (options) {
 			mapScale: [0, 0]
 		};
 
+
+	$("#choice .changeFill").on('mouseenter', function(){
+		var n = $(this).data('n');
+		$("#choice .text").addClass("choice"+n);
+	}).on('mouseleave', function(){
+		var n = $(this).data('n');
+		$("#choice .text").removeClass("choice"+n);
+	});
+
 	function mouseMove(evt) {
 		var x = evt.pageX,
 			y = evt.pageY;
