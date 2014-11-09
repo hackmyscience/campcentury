@@ -1505,7 +1505,7 @@ imagesLoaded( document.querySelector('#intro'), function( instance ) {
 
 
 function resize() {
-	var dpr = window.devicePixelRatio || 1;
+	var dpr = 1;//window.devicePixelRatio || 1;
 	manager.resize(window.innerWidth * dpr, window.innerHeight * dpr);
 	//todo: throttle/bounce resize
 }
