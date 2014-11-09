@@ -9,6 +9,7 @@
 		text-align: center;
 
 		.fill {
+			@include size(top, 6);
 			position: relative;
 			background-color: #000;
 			display: inline-block;
@@ -33,6 +34,9 @@
 			text-align: center;
 			width: 100%;
 			font-weight: 600;
+			height: inherit;
+			@include size(line-height, 25);
+			@include size(font-size, 25);
 			@include opacity(0);
 			@include transition(opacity 0.3s);
 		}
