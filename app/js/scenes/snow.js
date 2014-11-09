@@ -4,6 +4,7 @@ var Snow = function (options) {
 		VERTICAL_DISPLACE = 0.3,
 		FOG_SCALE = 1 / 2,
 		FADE_DURATION = 6000,
+		TRANSITION_TIME = 0.75,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
@@ -27,6 +28,7 @@ var Snow = function (options) {
 
 		//state variables
 		lastRender = 0,
+		isMuted = false,
 		revealRemaining = 1,
 		start = Date.now() / 1000,
 		noiseOffset = [0, 0],
@@ -37,23 +39,9 @@ var Snow = function (options) {
 		},
 		introText = $("#intro .title")[0],
 		instructions = $("#intro .instruction"),
-		currentInstruction = 0;
-
-
-	window.setInterval(function(){
-		if(currentInstruction >= instructions.length) {
-			currentInstruction = 0;
-		}
-
-		instructions.css('opacity', 0);
-		instructions.eq(currentInstruction).css('opacity', 1);
-
-		currentInstruction++;
-	}, 2000);
-
-	$("#intro .scrolldownArea").on('click', function(){
-		scrolling.goNext();
-	});
+		rotateIconInterval,
+		currentInstruction = 0,
+		audio;
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
@@ -69,6 +57,17 @@ var Snow = function (options) {
 		var textX = normalize(window.innerWidth - x, 0, window.innerWidth, -10, 10);
 
 		introText.style.transform = "translate("+(-(window.innerWidth/2) + textX)+"px, "+(-40)+"px)";
+	}
+
+	function rotateIcon() {
+		instructions.css('opacity', 0);
+		instructions.eq(currentInstruction).css('opacity', 1);
+
+		currentInstruction = (currentInstruction + 1) % instructions.length;
+	}
+
+	if (options.scrollNext) {
+		$('#intro .scrolldownArea').on('click', options.scrollNext);
 	}
 
 	seriously = new Seriously();
@@ -127,14 +126,30 @@ var Snow = function (options) {
 	blend.bottom = scale;
 	blend.mode = 'screen';
 
-	target.source = blend; //blend;
+	target.source = blend;
+
+	audio = new AudioLoop('audio/ccTitleAudio.mp3');
 
 	return {
 		start: function () {
 			window.addEventListener('mousemove', mouseMove, false);
+			rotateIconInterval = window.setInterval(rotateIcon, 2000);
+			audio.load();
+			if (!isMuted) {
+				audio.gain(0.5, TRANSITION_TIME);
+			}
+		},
+		fadeOut: function () {
+			audio.gain(0, TRANSITION_TIME);
+		},
+		muted: function (muted) {
+			isMuted = !!muted;
+			audio.gain(isMuted ? 0 : 0.5);
 		},
 		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);
+			window.clearInterval(rotateIconInterval);
+			audio.gain(0);
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {

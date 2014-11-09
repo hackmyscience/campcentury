@@ -1,6 +1,7 @@
 require('./utils.js');
 require('./scrolling.js');
 require('./scenemanager.js');
+require('./audioloop.js');
 require('./scenes/snow.js');
 require('./scenes/choice.js');
 
@@ -8,11 +9,15 @@ require('./scenes/choice.js');
 set up scene manager and load scenes
 */
 
+var scrolling = new Scrolling([]);
 var manager = new SceneManager();
+var scrollNext = scrolling.goNext.bind(scrolling);
 var scenes = {
 	intro: {
 		definition: Snow,
-		options: {},
+		options: {
+			scrollNext: scrollNext
+		},
 		index: 0
 	},
 	choice: {
@@ -21,7 +26,6 @@ var scenes = {
 		index: 1
 	}
 };
-var scrolling;
 
 function addScene(key, index) {
 	manager.add(scenes[key].scene, index);
@@ -32,7 +36,6 @@ function setUpScenes() {
 	var k,
 		scene;
 
-	scrolling = new Scrolling([]);
 	scrolling.canScroll = false;
 
 	for (k in scenes) {
@@ -99,6 +102,7 @@ document.onkeyup = function(event) {
 $(document).on('scrolling:change', function(e, info){
 	if (info.status === 'start') {
 		manager.activate(info.newSlide);
+		manager.fadeOut(info.oldSlide);
 	} else {
 		manager.deactivate(info.oldSlide);
 	}
