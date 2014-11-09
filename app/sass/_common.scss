@@ -69,7 +69,7 @@ canvas {
 
 .lateral-menu {
 	@include rotate3d(0, 1, 0, 0deg);
-	@include transform-origin(40px, 0);
+	@include transform-origin(60px, 0);
 	@include size(right, 30);
 	@include center_y;
 	@include opacity(0);
@@ -78,7 +78,7 @@ canvas {
 		background-size: 100%;
 		cursor: pointer;
 		@include opacity(0.5);
-		@include square(40);
+		@include square(60);
 		@include transition(opacity 0.3s);
 		cursor: pointer;
 

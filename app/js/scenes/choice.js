@@ -44,7 +44,22 @@ var Choice = function (options) {
 		$("#choice .text").removeClass("choice"+n);
 	}).on('click', function(){
 		var scene = $(this).data('scene');
-		addScene(scene);
+		
+		if(scene == 'science'){
+			addScene('science');
+			addScene('science2');
+		}
+		
+		if(scene == 'military'){
+			addScene('military');
+			addScene('military2');
+		}
+
+		if(scene == 'sociological'){
+			addScene('sociological');
+			addScene('sociological2');
+		}
+		
 		scrolling.goNext();
 	});
 

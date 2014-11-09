@@ -39,16 +39,34 @@ var scenes = {
 		index: 2,
 		delay: true
 	},
+	science2: {
+		definition: function(){ return {}},
+		options: {},
+		index: 3,
+		delay: true
+	},
 	military: {
 		definition: Military,
 		options: {},
 		index: 2,
 		delay: true
 	},
+	military2: {
+		definition: function(){ return {}},
+		options: {},
+		index: 3,
+		delay: true
+	},
 	sociological: {
 		definition: Sociological,
 		options: {},
 		index: 2,
+		delay: true
+	},
+	sociological2: {
+		definition: function(){ return {}},
+		options: {},
+		index: 3,
 		delay: true
 	}
 };

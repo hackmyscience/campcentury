@@ -1,4 +1,6 @@
 var Military = function (options) {
+return {};
+
 	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
 		PAN_AMOUNT = 0.05,
 		VERTICAL_DISPLACE = 0.3,

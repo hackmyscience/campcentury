@@ -1,123 +1,127 @@
 var Science = function (options) {
-	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
-		PAN_AMOUNT = 0.05,
-		VERTICAL_DISPLACE = 0.3,
-		TRANSITION_TIME = 0.75,
 
-		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
+	var imagePaths = [
+		'images/rain.png',
+		'images/rain2.png',
+		'images/rain3.png'
+	];
 
-		seriously,
-		canvas,
+	var canvas = document.getElementById("science-canvas"),
+				stage = new PIXI.Stage(0x0),
+				emitter = null,
+				renderer = PIXI.autoDetectRenderer(canvas.width, canvas.height, canvas),
+				bg = null;
 
-		//seriously nodes
-		saturation,
-		displace,
-		reformatBackground,
-		scale,
-		target,
+	// Calculate the current time
+	var elapsed = Date.now();
 
-		resizables = [],
+	// Resize the canvas to the size of the window
+	window.onresize = function(event) {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		renderer.resize(canvas.width, canvas.height);
+		if(bg)
+		{
+			//bg is a 1px by 1px image
+			bg.position.x = 0;
+			bg.position.y = 0;
+		}
+	};
+	window.onresize();
 
-		//state variables
-		props = {
-			mapScale: [0, 0]
-		},
-		isMuted = false,
-		audio,
-		lateralText = $("#science .lateral-text"),
-		lateralMenu = $("#science .lateral-menu");
+	// Preload the particle images and create PIXI textures from it
+	var urls = imagePaths.slice();
+	urls.push("images/ccChaptersLeft.jpg");
+	var loader = new PIXI.AssetLoader(imagePaths);
+	loader.onComplete = function()
+	{
+		bg = new PIXI.Sprite(PIXI.Texture.fromImage("images/ccChaptersLeft.jpg"));
+		//bg is a 1px by 1px image
+		/*bg.scale.x = canvas.width;
+		bg.scale.y = canvas.height;
+		bg.tint = 0x000000;*/
+		bg.position.x = 0;
+		bg.position.y = 0;
 
-	
+		stage.addChild(bg);
+		//collect the textures, now that they are all loaded
+		var textures = [];
+		for(var i = 0; i < imagePaths.length; ++i)
+			textures.push(PIXI.Texture.fromImage(imagePaths[i]));
+		// Create the new emitter and attach it to the stage
+		var emitterContainer = new PIXI.DisplayObjectContainer();
+		stage.addChild(emitterContainer);
+		emitter = new cloudkid.Emitter(
+			emitterContainer,
+			textures,
+			{
+				"alpha": {
+					"start": 0,
+					"end": 0.44
+				},
+				"scale": {
+					"start": 1,
+					"end": 1,
+					"minimumScaleMultiplier": 1
+				},
+				"color": {
+					"start": "ffffff",
+					"end": "ffffff"
+				},
+				"speed": {
+					"start": 2999.7,
+					"end": 3000
+				},
+				"acceleration": {
+					"x": null,
+					"y": null
+				},
+				"startRotation": {
+					"min": 65,
+					"max": 65
+				},
+				"rotationSpeed": {
+					"min": 0,
+					"max": 0
+				},
+				"lifetime": {
+					"min": 0.81,
+					"max": 0.81
+				},
+				"blendMode": "normal",
+				"frequency": 0.009,
+				"emitterLifetime": -1,
+				"maxParticles": 1000,
+				"pos": {
+					"x": 0,
+					"y": 0
+				},
+				"addAtBack": false,
+				"spawnType": "rect",
+				"spawnRect": {
+					"x": -600,
+					"y": -460,
+					"w": 900,
+					"h": 20
+				}
+			}
+		);
 
-	function mouseMove(evt) {
-		var x = evt.pageX,
-			y = evt.pageY;
+		// Center on the stage
+		emitter.updateOwnerPos(window.innerWidth / 2, window.innerHeight / 2);
 
-		props.mapScale[0] = -DISPLACE_AMOUNT * 2 * (x / window.innerWidth - 0.5);
-		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
 
-		displace.mapScale = props.mapScale;
-
-		var deg = Math.min(90, Math.max(0, normalize(x, 250, (window.innerWidth/2), 0, 90)));
-		var opacity = Math.min(1, Math.max(0, normalize(x, 250, (window.innerWidth/2), 1, 0)));
-		lateralText.css({
-			'transform': 'rotate3d(0, 1, 0, '+deg+'deg) translateY(-50%)',
-			'opacity': opacity
-		});
-
-		deg = Math.min(90, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 90, 0)));
-		opacity = Math.min(1, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 0, 1)));
-		lateralMenu.css({
-			'transform': 'rotate3d(0, 1, 0, '+(-deg)+'deg) translateY(-50%)',
-			'opacity': opacity
-		});
-	}
-
-	seriously = new Seriously();
-
-	canvas = document.createElement('canvas');
-	options.container.appendChild(canvas);
-	target = seriously.target(canvas);
-	resizables.push(target);
-
-	reformatBackground = seriously.transform('reformat');
-	reformatBackground.source = '#science-image';
-	reformatBackground.mode = 'cover';
-	resizables.push(reformatBackground);
-
-	//todo: remove saturation effect. do it in photoshop instead
-	saturation = seriously.effect('hue-saturation');
-	saturation.source = reformatBackground;
-	saturation.hue = 0;
-	saturation.saturation = 0.3;
-
-	//todo: set up displacement node
-	reformatDepth = seriously.transform('reformat');
-	reformatDepth.source = '#science-depth';
-	reformatDepth.mode = 'cover';
-	resizables.push(reformatDepth);
-
-	displace = seriously.effect('displacement');
-	displace.source = saturation;
-	displace.map = reformatDepth;
-	displace.mapScale = [0, 0];
-	displace.offset = 1.03 + PAN_AMOUNT;
-
-	scale = seriously.transform('2d');
-	scale.source = displace;
-	scale.scale(1 + totalOffset);
-
-	target.source = scale;
-
-	audio = new AudioLoop('audio/ccTitleAudio.mp3');
+	};
+	loader.load();	
 
 	return {
-		start: function () {
-			window.addEventListener('mousemove', mouseMove, false);
-			audio.load();
-			if (!isMuted) {
-				audio.gain(0.5, TRANSITION_TIME);
-			}
-		},
-		fadeOut: function () {
-			audio.gain(0, TRANSITION_TIME);
-		},
-		muted: function (muted) {
-			isMuted = !!muted;
-			audio.gain(isMuted ? 0 : 0.5);
-		},
-		stop: function () {
-			window.removeEventListener('mousemove', mouseMove, false);
-			audio.gain(0);
-		},
-		resize: function (width, height) {
-			resizables.forEach(function (node) {
-				node.width = width;
-				node.height = height;
-			});
-		},
 		render: function () {
-			seriously.render();
+				var now = Date.now();
+				emitter.update((now - elapsed) * 0.001);
+				elapsed = now;
+
+				// render the stage
+			    renderer.render(stage);
 		}
 	};
 };
