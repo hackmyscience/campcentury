@@ -36,7 +36,7 @@
 			width: 100%;
 			height: inherit;
 			text-decoration: underline;
-			@include size(line-height, 25);
+			@include size(line-height, 30);
 			@include opacity(0);
 			@include transition(opacity 0.3s);
 		}
