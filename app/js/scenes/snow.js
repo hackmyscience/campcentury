@@ -115,7 +115,7 @@ var Snow = function (options) {
 		start: function () {
 			window.addEventListener('mousemove', mouseMove, false);
 		},
-		end: function () {
+		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);
 		},
 		resize: function (width, height) {
