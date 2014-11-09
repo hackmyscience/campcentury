@@ -2,6 +2,7 @@ require('./utils.js');
 require('./scrolling.js');
 require('./scenemanager.js');
 require('./scenes/snow.js');
+require('./scenes/choice.js');
 
 /*
 set up scene manager and load scenes
@@ -10,8 +11,12 @@ set up scene manager and load scenes
 var manager = new SceneManager();
 var scenes = [];
 
-manager.add(Snow, {
-	container: $("#slide-1")[0]
+// manager.add(Snow, {
+// 	container: $("#slide-1")[0]
+// });
+
+manager.add(Choice, {
+	container: $("#slide-2")[0]
 });
 
 imagesLoaded( document.querySelector('#slide-1'), function( instance ) {
