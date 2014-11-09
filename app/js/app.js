@@ -28,6 +28,10 @@ var scenes = {
 };
 
 function addScene(key, index) {
+	if (index === undefined) {
+		index = scenes[key].index;
+	}
+
 	manager.add(scenes[key].scene, index);
 	scrolling.add(key, index);
 }
@@ -46,7 +50,7 @@ function setUpScenes() {
 			scene.scene = new SceneManager.Scene(scene.definition, scene.options);
 			
 			if (!scene.delay) {
-				addScene(k, scene.index);
+				addScene(k);
 			}
 		}
 	}
