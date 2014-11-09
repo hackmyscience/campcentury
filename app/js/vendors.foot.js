@@ -17,3 +17,5 @@ require('./vendors/effects/seriously.displacement.js');
 require('./vendors/effects/seriously.linear-transfer.js');
 require('./vendors/effects/seriously.simplex.js');
 require('./vendors/effects/seriously.hue-saturation.js');
+require('./vendors/effects/seriously.exposure.js');
+require('./vendors/simplex-noise.js');

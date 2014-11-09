@@ -1,45 +1,41 @@
 var Military = function (options) {
-return {};
+	var TRANSITION_TIME = 0.75,
+		FLICKER_MIN = -0.2000,
+		FLICKER_MAX = -0.2005,
+		MIN_FACTOR = 0.1,
+		FLICKER_RATE = 1 / 100,
+		FALLOFF_TIME = 1000,
 
-	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
-		PAN_AMOUNT = 0.05,
-		VERTICAL_DISPLACE = 0.3,
-		TRANSITION_TIME = 0.75,
-
-		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
+		maxFactor = 1 - MIN_FACTOR,
+		flickerRange = FLICKER_MAX - FLICKER_MIN,
+		flickerMid = FLICKER_MIN + flickerRange / 2,
 
 		seriously,
 		canvas,
 
 		//seriously nodes
-		saturation,
-		displace,
-		reformatBackground,
-		scale,
+		reformat,
+		exposure,
 		target,
 
 		resizables = [],
 
 		//state variables
-		props = {
-			mapScale: [0, 0]
-		},
 		isMuted = false,
+		flickerFactor = 0,
+		simplex,
+		lastRender = 0,
 
 		audio,
 		lateralText = $("#military .lateral-text"),
 		lateralMenu = $("#military .lateral-menu");
 
-	
-
 	function mouseMove(evt) {
 		var x = evt.pageX,
 			y = evt.pageY;
 
-		props.mapScale[0] = -DISPLACE_AMOUNT * 2 * (x / window.innerWidth - 0.5);
-		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
-
-		displace.mapScale = props.mapScale;
+		//bump flicker scaling
+		flickerFactor = Math.min(1, flickerFactor + 0.1);
 
 		var deg = Math.min(90, Math.max(0, normalize(x, 250, (window.innerWidth/2), 0, 90)));
 		var opacity = Math.min(1, Math.max(0, normalize(x, 250, (window.innerWidth/2), 1, 0)));
@@ -63,40 +59,24 @@ return {};
 	target = seriously.target(canvas);
 	resizables.push(target);
 
-	reformatBackground = seriously.transform('reformat');
-	reformatBackground.source = '#military-image';
-	reformatBackground.mode = 'cover';
-	resizables.push(reformatBackground);
+	exposure = seriously.effect('exposure');
+	exposure.source = '#military-image';
 
-	//todo: remove saturation effect. do it in photoshop instead
-	saturation = seriously.effect('hue-saturation');
-	saturation.source = reformatBackground;
-	saturation.hue = 0;
-	saturation.saturation = 0.3;
+	reformat = seriously.transform('reformat');
+	reformat.source = exposure;
+	reformat.mode = 'cover';
+	resizables.push(reformat);
 
-	//todo: set up displacement node
-	reformatDepth = seriously.transform('reformat');
-	reformatDepth.source = '#military-depth';
-	reformatDepth.mode = 'cover';
-	resizables.push(reformatDepth);
+	target.source = reformat;
 
-	displace = seriously.effect('displacement');
-	displace.source = saturation;
-	displace.map = reformatDepth;
-	displace.mapScale = [0, 0];
-	displace.offset = 1.03 + PAN_AMOUNT;
-
-	scale = seriously.transform('2d');
-	scale.source = displace;
-	scale.scale(1 + totalOffset);
-
-	target.source = scale;
+	simplex = new SimplexNoise();
 
 	audio = new AudioLoop('audio/ccTitleAudio.mp3');
 
+	window.addEventListener('mousemove', mouseMove, false);
+
 	return {
 		start: function () {
-			window.addEventListener('mousemove', mouseMove, false);
 			audio.load();
 			if (!isMuted) {
 				audio.gain(0.5, TRANSITION_TIME);
@@ -110,7 +90,6 @@ return {};
 			audio.gain(isMuted ? 0 : 0.5);
 		},
 		stop: function () {
-			window.removeEventListener('mousemove', mouseMove, false);
 			audio.gain(0);
 		},
 		resize: function (width, height) {
@@ -120,7 +99,16 @@ return {};
 			});
 		},
 		render: function () {
+			var now = Date.now(),
+				seed = now * FLICKER_RATE;
+
+			if (flickerFactor) {
+				flickerFactor = Math.max(0, flickerFactor - (now - lastRender) / FALLOFF_TIME);
+			}
+
+			exposure.exposure = flickerMid + (MIN_FACTOR + flickerFactor * maxFactor) * Math.pow(simplex.noise2D(seed, seed), 2);
 			seriously.render();
+			lastRender = now;
 		}
 	};
 };
