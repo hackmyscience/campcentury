@@ -10,9 +10,8 @@ var Sociological = function (options) {
 		canvas,
 
 		//seriously nodes
-		saturation,
 		displace,
-		reformatBackground,
+		reformat,
 		scale,
 		target,
 
@@ -60,31 +59,19 @@ var Sociological = function (options) {
 	target = seriously.target(canvas);
 	resizables.push(target);
 
-	reformatBackground = seriously.transform('reformat');
-	reformatBackground.source = '#sociological-image';
-	reformatBackground.mode = 'cover';
-	resizables.push(reformatBackground);
-
-	//todo: remove saturation effect. do it in photoshop instead
-	saturation = seriously.effect('hue-saturation');
-	saturation.source = reformatBackground;
-	saturation.hue = 0;
-	saturation.saturation = 0.3;
-
-	//todo: set up displacement node
-	reformatDepth = seriously.transform('reformat');
-	reformatDepth.source = '#sociological-depth';
-	reformatDepth.mode = 'cover';
-	resizables.push(reformatDepth);
-
 	displace = seriously.effect('displacement');
-	displace.source = saturation;
-	displace.map = reformatDepth;
+	displace.source = '#sociological-image';
+	displace.map = '#sociological-depth';
 	displace.mapScale = [0, 0];
 	displace.offset = 1.03 + PAN_AMOUNT;
 
+	reformat = seriously.transform('reformat');
+	reformat.source = displace;
+	reformat.mode = 'cover';
+	resizables.push(reformat);
+
 	scale = seriously.transform('2d');
-	scale.source = displace;
+	scale.source = reformat;
 	scale.scale(1 + totalOffset);
 
 	target.source = scale;
