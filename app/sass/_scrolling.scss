@@ -1,4 +1,4 @@
-
+/*
 @include keyframes(slideOut){
 	from {
 		@include transform(translateY(100%));
@@ -37,6 +37,47 @@
 
 	to {
 		@include transform(translateY(0%));
+	}
+}*/
+
+@include keyframes(slideOut){
+	from {
+		@include opacity(0);
+	}
+
+	to {
+		@include opacity(1);
+	}
+}
+
+@include keyframes(slideIn){
+	from {
+		@include opacity(1);
+	}
+
+	to {
+		@include opacity(0);
+	}
+}
+
+
+@include keyframes(slideInInv){
+	from {
+		@include opacity(1);
+	}
+
+	to {
+		@include opacity(0);
+	}
+}
+
+@include keyframes(slideOutInv) {
+	from {
+		@include opacity(0);
+	}
+
+	to {
+		@include opacity(1);
 	}
 }
 
