@@ -1,5 +1,4 @@
 /* global require, $, imagesLoaded, Scrolling, SceneManager, AudioLoop, Snow, Choice, Science, Military, Sociological */
-'use strict';
 
 require('./utils.js');
 require('./scrolling.js');
@@ -41,7 +40,7 @@ var scenes = {
 		delay: true
 	},
 	science2: {
-		definition: function(){ return {}},
+		definition: function(){ return {};},
 		options: {},
 		index: 3,
 		delay: true
@@ -53,7 +52,7 @@ var scenes = {
 		delay: true
 	},
 	military2: {
-		definition: function(){ return {}},
+		definition: function(){ return {};},
 		options: {},
 		index: 3,
 		delay: true
@@ -65,7 +64,7 @@ var scenes = {
 		delay: true
 	},
 	sociological2: {
-		definition: function(){ return {}},
+		definition: function(){ return {};},
 		options: {},
 		index: 3,
 		delay: true

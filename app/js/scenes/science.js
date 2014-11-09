@@ -1,9 +1,11 @@
 var Science = function (options) {
 
+	var lateralText = $("#science .lateral-text"),
+		lateralMenu = $("#science .lateral-menu");
+
 	var imagePaths = [
-		'images/rain.png',
-		'images/rain2.png',
-		'images/rain3.png'
+		'images/snow1.png',
+		'images/rain2.png'
 	];
 
 	var canvas = document.getElementById("science-canvas"),
@@ -22,26 +24,40 @@ var Science = function (options) {
 		renderer.resize(canvas.width, canvas.height);
 		if(bg)
 		{
-			//bg is a 1px by 1px image
-			bg.position.x = 0;
-			bg.position.y = 0;
+			var owidth = 1280, //720x405
+				oheight = 720, actualheight, actualwidth;
+
+			var windowWidth = window.innerWidth,
+			    windowHeight = window.innerHeight,
+			    windowAspectRatio = windowHeight / windowWidth,
+			    imgAspectRatio = 1280/720;
+
+           if (windowWidth / windowHeight > owidth / oheight) {
+               actualheight = Math.floor((oheight * windowWidth) / owidth) + 1;
+               actualwidth = Math.floor((actualheight * owidth) / oheight) + 1;
+           } else {
+               actualwidth = Math.floor((windowHeight * owidth) / oheight) + 1;
+               actualheight = Math.floor((oheight * actualwidth) / owidth) + 1;
+           }
+
+           bg.width = actualwidth;
+           bg.height = actualheight;
+           bg.position.y = (windowHeight/2) + (-actualheight / 2);
+           bg.position.x = (windowWidth/2) + (-actualwidth / 2);
+
 		}
 	};
 	window.onresize();
 
 	// Preload the particle images and create PIXI textures from it
 	var urls = imagePaths.slice();
-	urls.push("images/ccChaptersLeft.jpg");
+	urls.push("images/ccSnowBackground.jpeg");
 	var loader = new PIXI.AssetLoader(imagePaths);
 	loader.onComplete = function()
 	{
-		bg = new PIXI.Sprite(PIXI.Texture.fromImage("images/ccChaptersLeft.jpg"));
-		//bg is a 1px by 1px image
-		/*bg.scale.x = canvas.width;
-		bg.scale.y = canvas.height;
-		bg.tint = 0x000000;*/
-		bg.position.x = 0;
-		bg.position.y = 0;
+		bg = new PIXI.Sprite(PIXI.Texture.fromImage("images/ccSnowBackground.jpeg"));
+
+		window.onresize();
 
 		stage.addChild(bg);
 		//collect the textures, now that they are all loaded
@@ -56,8 +72,8 @@ var Science = function (options) {
 			textures,
 			{
 				"alpha": {
-					"start": 0,
-					"end": 0.44
+					"start": 0.05,
+					"end": 0.30
 				},
 				"scale": {
 					"start": 1,
@@ -69,7 +85,7 @@ var Science = function (options) {
 					"end": "ffffff"
 				},
 				"speed": {
-					"start": 2999.7,
+					"start": 600,
 					"end": 3000
 				},
 				"acceleration": {
@@ -77,7 +93,7 @@ var Science = function (options) {
 					"y": null
 				},
 				"startRotation": {
-					"min": 65,
+					"min": 15,
 					"max": 65
 				},
 				"rotationSpeed": {
@@ -89,7 +105,7 @@ var Science = function (options) {
 					"max": 0.81
 				},
 				"blendMode": "normal",
-				"frequency": 0.009,
+				"frequency": 0.004,
 				"emitterLifetime": -1,
 				"maxParticles": 1000,
 				"pos": {
@@ -113,6 +129,27 @@ var Science = function (options) {
 
 	};
 	loader.load();	
+
+	function mouseMove(evt) {
+		var x = evt.pageX,
+			y = evt.pageY;
+
+		var deg = Math.min(90, Math.max(0, normalize(x, 250, (window.innerWidth/2), 0, 90)));
+		var opacity = Math.min(1, Math.max(0, normalize(x, 250, (window.innerWidth/2), 1, 0)));
+		lateralText.css({
+			'transform': 'rotate3d(0, 1, 0, '+deg+'deg) translateY(-50%)',
+			'opacity': opacity
+		});
+
+		deg = Math.min(90, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 90, 0)));
+		opacity = Math.min(1, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 0, 1)));
+		lateralMenu.css({
+			'transform': 'rotate3d(0, 1, 0, '+(-deg)+'deg) translateY(-50%)',
+			'opacity': opacity
+		});
+	}
+
+	window.addEventListener('mousemove', mouseMove, false);
 
 	return {
 		render: function () {
