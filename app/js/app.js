@@ -1,6 +1,7 @@
 require('./utils.js');
 require('./scrolling.js');
 require('./scenemanager.js');
+require('./audioloop.js');
 require('./scenes/snow.js');
 require('./scenes/choice.js');
 
@@ -99,6 +100,7 @@ document.onkeyup = function(event) {
 $(document).on('scrolling:change', function(e, info){
 	if (info.status === 'start') {
 		manager.activate(info.newSlide);
+		manager.fadeOut(info.oldSlide);
 	} else {
 		manager.deactivate(info.oldSlide);
 	}

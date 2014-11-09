@@ -9,7 +9,8 @@
 			resize,
 			destroy,
 			render,
-			fade,
+			fadeOut,
+			muted,
 			isActive = false,
 			width = 0,
 			height = 0;
@@ -21,7 +22,8 @@
 		start = scene.start || function () {};
 		stop = scene.stop || function () {};
 		resize = scene.resize || function () {};
-		fade = scene.fade || function () {};
+		fadeOut = scene.fadeOut || function () {};
+		muted = scene.muted || function () {};
 		destroy = scene.destroy || function () {};
 
 		Object.defineProperty(this, 'id', {
@@ -55,7 +57,7 @@
 		};
 
 		this.render = render.bind(this);
-		this.fade = fade.bind(this);
+		this.fadeOut = fadeOut.bind(this);
 
 		this.resize = function (w, h) {
 			if (w !== width || h !== height) {
@@ -63,6 +65,14 @@
 				height = h;
 				resize(width, height);
 			}
+		};
+
+		this.mute = function () {
+			muted(true);
+		};
+
+		this.unMute = function () {
+			muted(false);
 		};
 	}
 
@@ -148,17 +158,30 @@
 
 		this.activate = function (index) {
 			var scene = findScene(index);
-			activeScenes[scene.id] = scene;
-			scene.resize(width, height);
-			scene.activate();
+			if (scene) {
+				activeScenes[scene.id] = scene;
+				scene.resize(width, height);
+				scene.activate();
+			}
+
+			return this;
+		};
+
+		this.fadeOut = function (index) {
+			var scene = findScene(index);
+			if (scene) {
+				scene.fadeOut();
+			}
 
 			return this;
 		};
 
 		this.deactivate = function (index) {
 			var scene = findScene(index);
-			scene.deactivate();
-			delete activeScenes[scene.id];
+			if (scene) {
+				scene.deactivate();
+				delete activeScenes[scene.id];
+			}
 
 			return this;
 		};

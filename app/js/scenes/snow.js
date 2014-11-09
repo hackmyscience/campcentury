@@ -4,6 +4,7 @@ var Snow = function (options) {
 		VERTICAL_DISPLACE = 0.3,
 		FOG_SCALE = 1 / 2,
 		FADE_DURATION = 6000,
+		TRANSITION_TIME = 0.75,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
@@ -27,6 +28,7 @@ var Snow = function (options) {
 
 		//state variables
 		lastRender = 0,
+		isMuted = false,
 		revealRemaining = 1,
 		start = Date.now() / 1000,
 		noiseOffset = [0, 0],
@@ -37,8 +39,8 @@ var Snow = function (options) {
 		},
 		introText = $("#intro .title")[0],
 		instructions = $("#intro .instruction"),
-		currentInstruction = 0;
-
+		currentInstruction = 0,
+		audio;
 
 	window.setInterval(function(){
 		if(currentInstruction >= instructions.length) {
@@ -127,14 +129,28 @@ var Snow = function (options) {
 	blend.bottom = scale;
 	blend.mode = 'screen';
 
-	target.source = blend; //blend;
+	target.source = blend;
+
+	audio = new AudioLoop('audio/ccTitleAudio.mp3');
 
 	return {
 		start: function () {
 			window.addEventListener('mousemove', mouseMove, false);
+			audio.load();
+			if (!isMuted) {
+				audio.gain(0.5, TRANSITION_TIME);
+			}
+		},
+		fadeOut: function () {
+			audio.gain(0, TRANSITION_TIME);
+		},
+		muted: function (muted) {
+			isMuted = !!muted;
+			audio.gain(isMuted ? 0 : 0.5);
 		},
 		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);
+			audio.gain(0);
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
