@@ -10,3 +10,7 @@
 	@include center_xy;
 	background-image: url('../images/loader.gif');
 }
+
+#image-textures > img {
+	display: none;
+}

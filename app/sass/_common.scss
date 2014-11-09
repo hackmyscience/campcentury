@@ -10,7 +10,7 @@ body {
 	height: 100%;
 	width: 100%;
 	overflow: auto;
-	@include perspective( 1000 );
+	@include perspective( 1400 );
 }
 
 canvas {
@@ -96,4 +96,8 @@ canvas {
 	.video {
 		background-image: url('../images/ccChaptersVideoicon.png');
 	}
+}
+
+#audio {
+	display: none;
 }

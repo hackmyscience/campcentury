@@ -144,7 +144,9 @@ var Snow = function (options) {
 		},
 		muted: function (muted) {
 			isMuted = !!muted;
-			audio.gain(isMuted ? 0 : 0.5);
+			if (this.active()) {
+				audio.gain(isMuted ? 0 : 0.5);
+			}
 		},
 		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);

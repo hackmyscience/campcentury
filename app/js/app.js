@@ -16,6 +16,8 @@ set up scene manager and load scenes
 var scrolling = new Scrolling([]);
 var manager = new SceneManager();
 var scrollNext = scrolling.goNext.bind(scrolling);
+var music = document.getElementById('music');
+var musicStarted = false;
 var scenes = {
 	intro: {
 		definition: Snow,
@@ -92,7 +94,15 @@ function ready(){
 		scrolling.jumpTo(1);
 	});
 	$("#menu .sound").on('click', function(){
-		//todo - disable sound
+		if (manager.muted()) {
+			manager.unMute();
+			if (musicStarted) {
+				music.play();
+			}
+		} else {
+			manager.mute();
+			music.pause();
+		}
 	});
 }
 
@@ -151,6 +161,13 @@ $(document).on('scrolling:change', function(e, info){
 		manager.fadeOut(info.oldSlide);
 	} else {
 		manager.deactivate(info.oldSlide);
+	}
+
+	if (!musicStarted && info.newSlide > 0) {
+		musicStarted = true;
+		if (!manager.muted()) {
+			music.play();
+		}
 	}
 });
 

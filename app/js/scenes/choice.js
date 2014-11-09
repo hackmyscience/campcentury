@@ -87,7 +87,8 @@ var Choice = function (options) {
 
 	target.source = scale;
 
-	audio = new AudioLoop('audio/ccTitleAudio.mp3');
+	//no sound effect on this page, at least for now
+	//audio = new AudioLoop('audio/ccTitleAudio.mp3');
 
 	return {
 		start: function () {
@@ -96,21 +97,27 @@ var Choice = function (options) {
 			//todo - do not hardcode ids
 
 			window.addEventListener('mousemove', mouseMove, false);
+			/*
 			audio.load();
 			if (!isMuted) {
 				audio.gain(0.5, TRANSITION_TIME);
 			}
+			*/
 		},
+		/*
 		fadeOut: function () {
 			audio.gain(0, TRANSITION_TIME);
 		},
 		muted: function (muted) {
 			isMuted = !!muted;
-			audio.gain(isMuted ? 0 : 0.5);
+			if (this.active()) {
+				audio.gain(isMuted ? 0 : 0.5);
+			}
 		},
+		*/
 		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);
-			audio.gain(0);
+			//audio.gain(0);
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
