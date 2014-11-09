@@ -11,4 +11,52 @@
 		font-family: 'Merriweather';
 	}
 
+	.scrolldownArea {
+		@include square(80);
+		@include transform(translateX(-50%));
+		position: absolute;
+		left: 50%;
+		bottom: 0;
+		cursor: pointer;
+
+		span {
+			@include size(width, 21);
+			@include size(height, 11);
+			@include animation(pulsebottom 3s ease-in-out infinite);
+			@include size(left, 30);
+			@include size(top, 30);
+			position: absolute;
+			display: block;
+			background-image: url('../images/scrolldown.png');
+		}
+	}
+
+}
+
+@include keyframes(pulsebottom) {
+    0% {
+      @include opacity(1);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+    30% {
+      @include opacity(0);
+      @include transform(scale(0.7));
+      @include transform(translateY(25px));
+    }
+    35% {
+      @include opacity(0);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+    50% {
+      @include opacity(1);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
+    100% {
+      @include opacity(1);
+      @include transform(scale(1));
+      @include transform(translateY(0px));
+    }
 }
