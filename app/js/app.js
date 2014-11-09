@@ -23,6 +23,11 @@ var scenes = {
 };
 var scrolling;
 
+function addScene(key, index) {
+	manager.add(scenes[key].scene, index);
+	scrolling.add(key, index);
+}
+
 function setUpScenes() {
 	var k,
 		scene;
@@ -33,11 +38,11 @@ function setUpScenes() {
 	for (k in scenes) {
 		if (scenes.hasOwnProperty(k)) {
 			scene = scenes[k];
+			scene.key = k;
 			scene.options.container = $("#" + k)[0];
 			scene.scene = new SceneManager.Scene(scene.definition, scene.options);
 			if (!scene.delay) {
-				manager.add(scene.scene, scene.index);
-				scrolling.add(k, scene.index);
+				addScene(k, scene.index);
 			}
 		}
 	}
@@ -92,7 +97,11 @@ document.onkeyup = function(event) {
 };
 
 $(document).on('scrolling:change', function(e, info){
-	console.log(info);
+	if (info.status === 'start') {
+		manager.activate(info.newSlide);
+	} else {
+		manager.deactivate(info.oldSlide);
+	}
 });
 
 
