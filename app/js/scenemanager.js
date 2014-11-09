@@ -12,6 +12,7 @@
 			fadeOut,
 			muted,
 			isActive = false,
+			name,
 			width = 0,
 			height = 0;
 
@@ -25,6 +26,8 @@
 		fadeOut = (scene.fadeOut || function () {}).bind(this);
 		muted = (scene.muted || function () {}).bind(this);
 		destroy = (scene.destroy || function () {}).bind(this);
+
+		this.name = options.name || definition.name || 'scene-' + id;
 
 		Object.defineProperty(this, 'id', {
 			configurable: true,
@@ -49,7 +52,8 @@
 		};
 
 		this.destroy = function () {
-			this.stop();
+			this.deactivate();
+			destroy();
 		};
 
 		this.active = function () {
@@ -79,6 +83,7 @@
 	function SceneManager(inintialWidth, initialHeight) {
 		var self = this,
 			scenes = [],
+			scenesByName = {},
 			activeScenes = {},
 			width = 0,
 			height = 0,
@@ -90,11 +95,15 @@
 				return index;
 			}
 
+			if (typeof index === 'string') {
+				return scenesByName[index] || null;
+			}
+
 			if (isNaN(index) || index < 0 || index >= scenes.length) {
 				return null;
 			}
 
-			return scenes[index];
+			return scenes[index] || null;
 		}
 
 		function animate() {
@@ -114,8 +123,14 @@
 				scene = new Scene(scene, options);
 			} else if (scenes.indexOf(scene) >= 0) {
 				return;
-			} else if (!(scene instanceof Scene)) {
+			}
+
+			if (!(scene instanceof Scene)) {
 				throw 'SceneManager needs a scene or a function';
+			}
+
+			if (scenesByName[scene.name]) {
+				throw 'Attempt to add duplicate scene';
 			}
 
 			if (index === undefined || index >= scenes.length || index < 0) {
@@ -123,6 +138,8 @@
 			} else {
 				scenes.splice(index, 0, scene);
 			}
+
+			scenesByName[scene.name] = scene;
 
 			if (muted) {
 				scene.mute();
@@ -157,8 +174,9 @@
 			}
 
 			this.deactivate(index);
-			scene.destroy();
+			//scene.destroy();
 			scenes.splice(index, 1);
+			delete scenesByName[scene.name];
 
 			return this;
 		};

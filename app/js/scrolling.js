@@ -11,6 +11,11 @@ var Scrolling = function(slides){
 			index = this.slides.length;
 		}
 
+		//no duplicates please
+		if (this.slides.indexOf(id) >= 0) {
+			return;
+		}
+
 		this.slides.splice(index, 0, id);
 
 		if(index < this.currentSlide){
@@ -20,6 +25,14 @@ var Scrolling = function(slides){
 	};
 
 	this.remove = function(index){
+		if (typeof index === 'string') {
+			index = this.slides.indexOf(index);
+		}
+
+		if (index < 0 || index >= this.slides.length) {
+			return;
+		}
+
 		if(index == this.currentSlide){
 			return false; //todo: allow to remove the current slide
 		}
