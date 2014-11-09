@@ -33,7 +33,13 @@ var Choice = function (options) {
 	}).on('mouseleave', function(){
 		var n = $(this).data('n');
 		$("#choice .text").removeClass("choice"+n);
+	}).on('click', function(){
+		var scene = $(this).data('scene');
+		addScene(scene);
+		scrolling.goNext();
 	});
+
+	
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
@@ -85,6 +91,10 @@ var Choice = function (options) {
 
 	return {
 		start: function () {
+
+			scrolling.slides = ['intro', 'choice'];
+			//todo - do not hardcode ids
+
 			window.addEventListener('mousemove', mouseMove, false);
 			audio.load();
 			if (!isMuted) {

@@ -5,6 +5,10 @@ require('./audioloop.js');
 require('./scenes/snow.js');
 require('./scenes/choice.js');
 
+require('./scenes/science.js');
+require('./scenes/military.js');
+require('./scenes/sociological.js');
+
 /*
 set up scene manager and load scenes
 */
@@ -24,6 +28,24 @@ var scenes = {
 		definition: Choice,
 		options: {},
 		index: 1
+	},
+	science: {
+		definition: Science,
+		options: {},
+		index: 2,
+		delay: true
+	},
+	military: {
+		definition: Military,
+		options: {},
+		index: 2,
+		delay: true
+	},
+	sociological: {
+		definition: Sociological,
+		options: {},
+		index: 2,
+		delay: true
 	}
 };
 
