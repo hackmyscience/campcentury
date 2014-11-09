@@ -254,7 +254,7 @@
 
 		this.muted = function () {
 			return muted;
-		}
+		};
 
 		this.resize(inintialWidth || 0, initialHeight || 0);
 	}
