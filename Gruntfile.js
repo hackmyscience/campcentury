@@ -48,7 +48,7 @@ module.exports = function(grunt) {
             //https://github.com/gruntjs/grunt-contrib-copy
             main: {
                 files: [
-                    {expand: true, cwd: paths.src, src: [ '**/*' ], dest: paths.dest }
+                    {expand: true, cwd: paths.src, src: [ '**/*' ], dest: paths.dest, dot: true }
                 ]
             }
         },

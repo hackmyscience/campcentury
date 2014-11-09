@@ -4,6 +4,8 @@ var Scrolling = function(slides){
 	this.animating = false;
 	this.canScroll = false;
 
+	History.pushState(null, null, "/");
+
 	this.add = function(id, index){
 		if(!index) {
 			index = this.slides.length;
@@ -42,8 +44,26 @@ var Scrolling = function(slides){
 			return false;
 		}
 
-		this.animating = true;
+		History.pushState(null, null, "/"+this.slides[destination]);
+	};
 
+	this.getSlide = function(n){
+		return $('#'+this.slides[n]);
+	};
+
+
+	History.Adapter.bind(window,'statechange',$.proxy(function(){
+		var State = History.getState();
+		
+		var destinationId = State.hash.substr(1),
+			destination = this.slides.indexOf(destinationId);
+
+		if(typeof destination === 'undefined'){
+			return false;
+		}
+
+		this.animating = true;
+		
 		var oldSlideN = this.currentSlide,
 			oldSlide = this.getSlide( this.currentSlide ),
 			newSlide = this.getSlide( destination ),
@@ -79,10 +99,6 @@ var Scrolling = function(slides){
 		this.getSlide(destination+1).addClass('adiacent');
 
 		this.currentSlide = destination;
-	};
-
-	this.getSlide = function(n){
-		return $('#'+this.slides[n]);
-	};
+	}, this));
 
 };
