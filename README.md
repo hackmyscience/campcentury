@@ -2,6 +2,8 @@
 
 A prototype interactive documentary created at POV Hackathon 7
 
+[View the prototype](http://campcentury.github.io/campcentury)
+
 ## Artistic Statement ##
 
 Our prototype was focused on two key challenges. We firstly wanted to create a simple way to introduce some context to the story of Camp Century. It's a complex narrative. So we felt a way to discover the different sides would be valuable. We focused on a mechanic which mimics redacted information from government document, the big black blocked out chunks of text for us felt like a strong visual to play with interactively. 
