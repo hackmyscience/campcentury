@@ -1,3 +1,4 @@
+/* global require, $, imagesLoaded, Scrolling, SceneManager, AudioLoop, Snow, Choice, Science, Military, Sociological */
 'use strict';
 
 require('./utils.js');
