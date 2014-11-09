@@ -1,6 +1,6 @@
 # Camp Century #
 
-A prototype interactive documentary created at POV Hackathon 7
+A prototype interactive documentary created at [POV Hackathon](http://www.pbs.org/pov/hackathon/) 7
 
 [View the prototype](http://campcentury.github.io/campcentury)
 
