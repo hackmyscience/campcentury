@@ -127,6 +127,9 @@ canvas {
 #menu li.sound {
   background-image: url("../images/ccButtonSound.png");
 }
+#menu li.fullscreen {
+  background-image: url("../images/ccButtonFs.png");
+}
 
 .lateral-text {
   position: absolute;
