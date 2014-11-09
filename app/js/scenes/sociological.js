@@ -78,9 +78,10 @@ var Sociological = function (options) {
 
 	audio = new AudioLoop('audio/ccChaptersRightSfx.mp3');
 
+	window.addEventListener('mousemove', mouseMove, false);
+
 	return {
 		start: function () {
-			window.addEventListener('mousemove', mouseMove, false);
 			audio.load();
 			if (!isMuted) {
 				audio.gain(0.5, TRANSITION_TIME);
@@ -94,7 +95,7 @@ var Sociological = function (options) {
 			audio.gain(isMuted ? 0 : 0.5);
 		},
 		stop: function () {
-			window.removeEventListener('mousemove', mouseMove, false);
+			//window.removeEventListener('mousemove', mouseMove, false);
 			audio.gain(0);
 		},
 		resize: function (width, height) {

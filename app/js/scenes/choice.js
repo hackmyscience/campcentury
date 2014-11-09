@@ -93,13 +93,13 @@ var Choice = function (options) {
 	//no sound effect on this page, at least for now
 	//audio = new AudioLoop('audio/ccTitleAudio.mp3');
 
+	window.addEventListener('mousemove', mouseMove, false);
 	return {
 		start: function () {
 
 			scrolling.slides = ['intro', 'choice'];
 			//todo - do not hardcode ids
 
-			window.addEventListener('mousemove', mouseMove, false);
 			/*
 			audio.load();
 			if (!isMuted) {
@@ -119,7 +119,7 @@ var Choice = function (options) {
 		},
 		*/
 		stop: function () {
-			window.removeEventListener('mousemove', mouseMove, false);
+			//window.removeEventListener('mousemove', mouseMove, false);
 			//audio.gain(0);
 		},
 		resize: function (width, height) {

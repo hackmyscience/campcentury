@@ -130,9 +130,10 @@ var Snow = function (options) {
 
 	audio = new AudioLoop('audio/ccTitleAudio.mp3');
 
+	window.addEventListener('mousemove', mouseMove, false);
+
 	return {
 		start: function () {
-			window.addEventListener('mousemove', mouseMove, false);
 			rotateIconInterval = window.setInterval(rotateIcon, 2000);
 			audio.load();
 			if (!isMuted) {
@@ -149,7 +150,7 @@ var Snow = function (options) {
 			}
 		},
 		stop: function () {
-			window.removeEventListener('mousemove', mouseMove, false);
+			//window.removeEventListener('mousemove', mouseMove, false);
 			window.clearInterval(rotateIconInterval);
 			audio.gain(0);
 		},
