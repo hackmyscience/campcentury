@@ -168,6 +168,10 @@ function ready(){
 	});
 
 	$("#intro .scroll-stuff").css('opacity', 1);
+
+	$("#menu .fullscreen").on('click', function(){
+		$('body').fullScreen();
+	});
 }
 
 imagesLoaded( document.querySelector('#intro'), function( instance ) {

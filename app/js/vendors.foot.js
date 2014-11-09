@@ -8,6 +8,7 @@ require('./vendors/lodash.js');
 require('./vendors/stats.js');
 require('./vendors/DepthyViewer.js');
 require('./vendors/imagesloaded.js');
+require('./vendors/fullscreen.js');
 
 //seriously.js and related effects
 require('./vendors/seriously.js');
