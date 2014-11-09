@@ -59,6 +59,7 @@ var Choice = function (options) {
 			addScene('sociological');
 			addScene('sociological2');
 		}
+		addScene('end');
 		
 		scrolling.goNext();
 	});

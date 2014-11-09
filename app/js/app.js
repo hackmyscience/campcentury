@@ -8,8 +8,15 @@ require('./scenes/snow.js');
 require('./scenes/choice.js');
 
 require('./scenes/science.js');
+require('./scenes/science2.js');
+
 require('./scenes/military.js');
+require('./scenes/military2.js');
+
 require('./scenes/sociological.js');
+require('./scenes/sociological2.js');
+
+require('./scenes/end.js');
 
 /*
 set up scene manager and load scenes
@@ -40,7 +47,7 @@ var scenes = {
 		delay: true
 	},
 	science2: {
-		definition: function(){ return {};},
+		definition: Science2,
 		options: {},
 		index: 3,
 		delay: true
@@ -52,7 +59,7 @@ var scenes = {
 		delay: true
 	},
 	military2: {
-		definition: function(){ return {};},
+		definition: Military2,
 		options: {},
 		index: 3,
 		delay: true
@@ -64,9 +71,16 @@ var scenes = {
 		delay: true
 	},
 	sociological2: {
-		definition: function(){ return {};},
+		definition: Sociological2,
 		options: {},
 		index: 3,
+		delay: true
+	},
+
+	end: {
+		definition: End,
+		options: {},
+		index: 4,
 		delay: true
 	}
 };
