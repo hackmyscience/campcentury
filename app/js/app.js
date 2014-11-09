@@ -1,3 +1,5 @@
+'use strict';
+
 require('./utils.js');
 require('./scrolling.js');
 require('./scenemanager.js');

@@ -1,8 +1,8 @@
 var Choice = function (options) {
-	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
-		PAN_AMOUNT = 0.05,
-		VERTICAL_DISPLACE = 0.3,
-		TRANSITION_TIME = 0.75,
+	var DISPLACE_AMOUNT = 0.15, // 0.12 is a good amount, but making it higher for demo
+		PAN_AMOUNT = 0.0,
+		VERTICAL_DISPLACE = 0.0,
+		//TRANSITION_TIME = 0.75,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
@@ -10,9 +10,9 @@ var Choice = function (options) {
 		canvas,
 
 		//seriously nodes
-		saturation,
 		displace,
-		reformatBackground,
+		background,
+		reformat,
 		scale,
 		target,
 
@@ -21,11 +21,20 @@ var Choice = function (options) {
 		//state variables
 		props = {
 			mapScale: [0, 0]
-		},
-		isMuted = false,
+		};
 
-		audio;
+		//isMuted = false,
+		//audio;
 
+	function mouseMove(evt) {
+		var x = evt.pageX,
+			y = evt.pageY;
+
+		props.mapScale[0] = -DISPLACE_AMOUNT * 2 * (x / window.innerWidth - 0.5);
+		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
+
+		displace.mapScale = props.mapScale;
+	}
 
 	$("#choice .changeFill").on('mouseenter', function(){
 		var n = $(this).data('n');
@@ -40,17 +49,6 @@ var Choice = function (options) {
 	});
 
 	
-
-	function mouseMove(evt) {
-		var x = evt.pageX,
-			y = evt.pageY;
-
-		props.mapScale[0] = -DISPLACE_AMOUNT * 2 * (x / window.innerWidth - 0.5);
-		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
-
-		displace.mapScale = props.mapScale;
-	}
-
 	seriously = new Seriously();
 
 	canvas = document.createElement('canvas');
@@ -58,31 +56,21 @@ var Choice = function (options) {
 	target = seriously.target(canvas);
 	resizables.push(target);
 
-	reformatBackground = seriously.transform('reformat');
-	reformatBackground.source = '#title-image';
-	reformatBackground.mode = 'cover';
-	resizables.push(reformatBackground);
-
-	//todo: remove saturation effect. do it in photoshop instead
-	saturation = seriously.effect('hue-saturation');
-	saturation.source = reformatBackground;
-	saturation.hue = 0;
-	saturation.saturation = 0.3;
-
-	//todo: set up displacement node
-	reformatDepth = seriously.transform('reformat');
-	reformatDepth.source = '#title-depth';
-	reformatDepth.mode = 'cover';
-	resizables.push(reformatDepth);
+	background = seriously.source('#choice-image');
 
 	displace = seriously.effect('displacement');
-	displace.source = saturation;
-	displace.map = reformatDepth;
+	displace.source = background;
+	displace.map = '#choice-depth';
 	displace.mapScale = [0, 0];
 	displace.offset = 1.03 + PAN_AMOUNT;
 
+	reformat = seriously.transform('reformat');
+	reformat.source = displace;
+	reformat.mode = 'cover';
+	resizables.push(reformat);
+
 	scale = seriously.transform('2d');
-	scale.source = displace;
+	scale.source = reformat;
 	scale.scale(1 + totalOffset);
 
 	target.source = scale;
