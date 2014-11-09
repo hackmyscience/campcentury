@@ -76,7 +76,7 @@ var Sociological = function (options) {
 
 	target.source = scale;
 
-	audio = new AudioLoop('audio/ccTitleAudio.mp3');
+	audio = new AudioLoop('audio/ccChaptersRightSfx.mp3');
 
 	return {
 		start: function () {
