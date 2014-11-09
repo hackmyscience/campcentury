@@ -1,6 +1,8 @@
 # Camp Century #
 
-A prototype interactive documentary created at POV Hackathon 7
+A prototype interactive documentary created at [POV Hackathon](http://www.pbs.org/pov/hackathon/) 7
+
+[View the prototype](http://campcentury.github.io/campcentury)
 
 ## Artistic Statement ##
 
@@ -8,7 +10,13 @@ Our prototype was focused on two key challenges. We firstly wanted to create a s
 
 Our second, and more significant challenge came in the form of 3d photos. We wanted to look at a way to 'bring back to life' some photographs from a long tie ago. Interactivity in it's most simple form still adds a layer of immersion, it still draws the viewer in. So we have explored a technique involving hand-painting depth-maps of some vintage photos, and applying those depth maps to create a sense of 3d space.
 
-Once the basic mechanic of depth was built, we started looking at both lighting and weather effects, to add to the sense of there being some life in these documents of a forgotten moment. 
+Once the basic mechanic of depth was built, we started looking at both lighting and weather effects, to add to the sense of there being some life in these documents of a forgotten moment.
+
+## Authors ##
+
+*Camp Century* is a multi-media documentary project by [Anrick Bregman](http://anrick.com/) and [Nicole Paglia](http://www.nicolepaglia.com/).
+
+The prototype was created at POV Hackathon 7 in November 2014 by Anrick Bregman, [Brian Chirls](http://chirls.com) and [Luigi De Rosa](https://twitter.com/luruke).
 
 ## Technology ##
 
@@ -31,5 +39,6 @@ The following open source libraries and web standards were used:
 - [Seriously.js](http://github.com/brianchirls/Seriously.js) - A video compositor used for the displacement maps, clouds and light flicker effect
 - [Pixi.js](http://www.pixijs.com/) and PixiParticles - For snow effect
 - Web Audio API - for seamless looping sound effects
+- [simplex-noise.js](https://github.com/jwagner/simplex-noise.js) - A fast simplex noise implementation in Javascript.
 - [jQuery](http://jquery.com)
 - [Lo-Dash](https://lodash.com)
