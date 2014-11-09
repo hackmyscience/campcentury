@@ -1,7 +1,7 @@
 var Sociological = function (options) {
-	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
+	var DISPLACE_AMOUNT = 0.1, // 0.12 is a good amount, but making it higher for demo
 		PAN_AMOUNT = 0,
-		VERTICAL_DISPLACE = 0.3,
+		VERTICAL_DISPLACE = 0.1,
 		TRANSITION_TIME = 0.75,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
