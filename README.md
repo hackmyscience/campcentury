@@ -10,7 +10,13 @@ Our prototype was focused on two key challenges. We firstly wanted to create a s
 
 Our second, and more significant challenge came in the form of 3d photos. We wanted to look at a way to 'bring back to life' some photographs from a long tie ago. Interactivity in it's most simple form still adds a layer of immersion, it still draws the viewer in. So we have explored a technique involving hand-painting depth-maps of some vintage photos, and applying those depth maps to create a sense of 3d space.
 
-Once the basic mechanic of depth was built, we started looking at both lighting and weather effects, to add to the sense of there being some life in these documents of a forgotten moment. 
+Once the basic mechanic of depth was built, we started looking at both lighting and weather effects, to add to the sense of there being some life in these documents of a forgotten moment.
+
+## Authors ##
+
+*Camp Century* is a multi-media documentary project by [Anrick Bregman](http://anrick.com/) and [Nicole Paglia](http://www.nicolepaglia.com/).
+
+The prototype was created at POV Hackathon 7 in November 2014 by Anrick Bregman, [Brian Chirls](http://chirls.com) and [Luigi De Rosa](https://twitter.com/luruke).
 
 ## Technology ##
 
