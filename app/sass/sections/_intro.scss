@@ -18,6 +18,11 @@
 			@include size(margin-top, 15);
 		}
 	}
+	
+	.scroll-stuff {
+		@include opacity(0);
+		@include transition(opacity 0.6s);
+	}
 
 	.scrollMouse {
 		@include size(width, 25);

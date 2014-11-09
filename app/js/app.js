@@ -104,6 +104,8 @@ function ready(){
 			music.pause();
 		}
 	});
+
+	$("#intro .scroll-stuff").css('opacity', 1);
 }
 
 imagesLoaded( document.querySelector('#intro'), function( instance ) {
