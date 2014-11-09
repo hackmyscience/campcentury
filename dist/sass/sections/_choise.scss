@@ -1,0 +1,12 @@
+#choise {
+
+	.choises {
+		@include center_x;
+		bottom: 0;
+
+		li {
+			@include square(80);
+			display: inline-block;
+		}
+	}
+}
