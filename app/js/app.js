@@ -80,21 +80,40 @@ function setUpScenes() {
 
 setUpScenes();
 
+function ready(){
+	//after the loading and white transition
+	scrolling.canScroll = true;
+	$("#menu").css('opacity', 1);
+
+	$("#menu .home").on('click', function(){
+		scrolling.jumpTo(0);
+	});
+	$("#menu .word").on('click', function(){
+		scrolling.jumpTo(1);
+	});
+	$("#menu .sound").on('click', function(){
+		//todo - disable sound
+	});
+}
+
 imagesLoaded( document.querySelector('#intro'), function( instance ) {
 	$("#loading").css('opacity', 0).on(transitionEnd, function(){
 		$(this).remove();
 	});
 
 	manager.activate(0);
-	scrolling.canScroll = true; //todo - after 6 secs?
+
+	window.setTimeout(ready, 6000);
+
 });
+
+
 
 function resize() {
 	var dpr = window.devicePixelRatio || 1;
 	manager.resize(window.innerWidth * dpr, window.innerHeight * dpr);
 	//todo: throttle/bounce resize
 }
-
 
 
 function handleScroll(e, delta, deltaX, deltaY){
