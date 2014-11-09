@@ -137,6 +137,8 @@ function activateBranch(branch) {
 		}
 	});
 
+	addScene('end');
+
 	scrolling.goNext();
 }
 
