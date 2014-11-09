@@ -37,46 +37,53 @@ var scenes = {
 	},
 	choice: {
 		definition: Choice,
-		options: {},
+		options: {
+			activateBranch: activateBranch
+		},
 		index: 1
 	},
 	science: {
 		definition: Science,
 		options: {},
 		index: 2,
-		delay: true
+		delay: true,
+		branch: 'science'
 	},
 	science2: {
 		definition: Science2,
 		options: {},
 		index: 3,
-		delay: true
+		delay: true,
+		branch: 'science'
 	},
 	military: {
 		definition: Military,
 		options: {},
 		index: 2,
-		delay: true
+		delay: true,
+		branch: 'military'
 	},
 	military2: {
 		definition: Military2,
 		options: {},
 		index: 3,
-		delay: true
+		delay: true,
+		branch: 'military'
 	},
 	sociological: {
 		definition: Sociological,
 		options: {},
 		index: 2,
-		delay: true
+		delay: true,
+		branch: 'sociological'
 	},
 	sociological2: {
 		definition: Sociological2,
 		options: {},
 		index: 3,
-		delay: true
+		delay: true,
+		branch: 'sociological'
 	},
-
 	end: {
 		definition: End,
 		options: {},
@@ -86,11 +93,12 @@ var scenes = {
 };
 
 function addScene(key, index) {
+	var scene = scenes[key];
 	if (index === undefined) {
-		index = scenes[key].index;
+		index = scene.index;
 	}
 
-	manager.add(scenes[key].scene, index);
+	manager.add(scene.scene, index);
 	scrolling.add(key, index);
 }
 
@@ -105,6 +113,11 @@ function setUpScenes() {
 			scene = scenes[k];
 			scene.key = k;
 			scene.options.container = $("#" + k)[0];
+
+			if (!scene.options.name) {
+				scene.options.name = k;
+			}
+
 			scene.scene = new SceneManager.Scene(scene.definition, scene.options);
 			
 			if (!scene.delay) {
@@ -112,6 +125,19 @@ function setUpScenes() {
 			}
 		}
 	}
+}
+
+function activateBranch(branch) {
+	_.forEach(scenes, function (scene) {
+		if (scene.branch === branch) {
+			addScene(scene.key);
+		} else if (scene.branch) {
+			manager.remove(scene.scene);
+			scrolling.remove(scene.key);
+		}
+	});
+
+	scrolling.goNext();
 }
 
 setUpScenes();
@@ -205,14 +231,6 @@ $(document).on('scrolling:change', function(e, info){
 			music.play();
 		}
 	}
-});
-
-
-$("#add").on('click', function(){
-	scrolling.add('slide-4');
-});
-$("#remove").on('click', function(){
-	scrolling.remove(0);
 });
 
 $(window).on('resize', _.throttle(resize, 100));

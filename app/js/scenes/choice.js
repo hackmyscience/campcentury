@@ -43,25 +43,9 @@ var Choice = function (options) {
 		var n = $(this).data('n');
 		$("#choice .text").removeClass("choice"+n);
 	}).on('click', function(){
-		var scene = $(this).data('scene');
-		
-		if(scene == 'science'){
-			addScene('science');
-			addScene('science2');
+		if (options.activateBranch) {
+			options.activateBranch($(this).data('scene'));
 		}
-		
-		if(scene == 'military'){
-			addScene('military');
-			addScene('military2');
-		}
-
-		if(scene == 'sociological'){
-			addScene('sociological');
-			addScene('sociological2');
-		}
-		addScene('end');
-		
-		scrolling.goNext();
 	});
 
 	
@@ -97,10 +81,6 @@ var Choice = function (options) {
 	window.addEventListener('mousemove', mouseMove, false);
 	return {
 		start: function () {
-
-			scrolling.slides = ['intro', 'choice'];
-			//todo - do not hardcode ids
-
 			/*
 			audio.load();
 			if (!isMuted) {
