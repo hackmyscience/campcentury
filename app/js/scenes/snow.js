@@ -39,23 +39,9 @@ var Snow = function (options) {
 		},
 		introText = $("#intro .title")[0],
 		instructions = $("#intro .instruction"),
+		rotateIconInterval,
 		currentInstruction = 0,
 		audio;
-
-	window.setInterval(function(){
-		if(currentInstruction >= instructions.length) {
-			currentInstruction = 0;
-		}
-
-		instructions.css('opacity', 0);
-		instructions.eq(currentInstruction).css('opacity', 1);
-
-		currentInstruction++;
-	}, 2000);
-
-	$("#intro .scrolldownArea").on('click', function(){
-		scrolling.goNext();
-	});
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
@@ -71,6 +57,17 @@ var Snow = function (options) {
 		var textX = normalize(window.innerWidth - x, 0, window.innerWidth, -10, 10);
 
 		introText.style.transform = "translate("+(-(window.innerWidth/2) + textX)+"px, "+(-40)+"px)";
+	}
+
+	function rotateIcon() {
+		instructions.css('opacity', 0);
+		instructions.eq(currentInstruction).css('opacity', 1);
+
+		currentInstruction = (currentInstruction + 1) % instructions.length;
+	}
+
+	if (options.scrollNext) {
+		$('#intro .scrolldownArea').on('click', options.scrollNext);
 	}
 
 	seriously = new Seriously();
@@ -136,6 +133,7 @@ var Snow = function (options) {
 	return {
 		start: function () {
 			window.addEventListener('mousemove', mouseMove, false);
+			rotateIconInterval = window.setInterval(rotateIcon, 2000);
 			audio.load();
 			if (!isMuted) {
 				audio.gain(0.5, TRANSITION_TIME);
@@ -150,6 +148,7 @@ var Snow = function (options) {
 		},
 		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);
+			window.clearInterval(rotateIconInterval);
 			audio.gain(0);
 		},
 		resize: function (width, height) {
