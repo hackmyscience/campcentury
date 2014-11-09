@@ -36,9 +36,11 @@
 			width: 100%;
 			height: inherit;
 			text-decoration: underline;
+			@include transform(translateZ(0));
 			@include size(line-height, 30);
 			@include opacity(0);
-			@include transition(opacity 0.3s);
+			@include filter(blur(10px));
+			@include transition(opacity 0.3s, filter 0.3s);
 		}
 	}
 
@@ -48,6 +50,7 @@
 		}
 		span.word-1 {
 			@include opacity(1);
+			@include filter(blur(0px));
 		}
 	}
 	
@@ -57,6 +60,7 @@
 		}
 		span.word-2 {
 			@include opacity(1);
+			@include filter(blur(0px));
 		}
 	}
 	
@@ -66,6 +70,7 @@
 		}
 		span.word-3 {
 			@include opacity(1);
+			@include filter(blur(0px));
 		}
 	}
 
