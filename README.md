@@ -33,5 +33,6 @@ The following open source libraries and web standards were used:
 - [Seriously.js](http://github.com/brianchirls/Seriously.js) - A video compositor used for the displacement maps, clouds and light flicker effect
 - [Pixi.js](http://www.pixijs.com/) and PixiParticles - For snow effect
 - Web Audio API - for seamless looping sound effects
+- [simplex-noise.js](https://github.com/jwagner/simplex-noise.js) - A fast simplex noise implementation in Javascript.
 - [jQuery](http://jquery.com)
 - [Lo-Dash](https://lodash.com)
