@@ -135,9 +135,9 @@ var Snow = function (options) {
 			if (revealRemaining && lastRender) {
 				revealRemaining = Math.max(0, revealRemaining -  (now - lastRender) / FADE_DURATION);
 				//console.log(now, lastRender, now - lastRender, revealRemaining);
-				props.intercept[0] = revealRemaining;
-				props.intercept[1] = revealRemaining;
-				props.intercept[2] = revealRemaining;
+				props.intercept[0] = revealRemaining * 1.15 - 0.15;
+				props.intercept[1] = revealRemaining * 1.15 - 0.15;
+				props.intercept[2] = revealRemaining * 1.15 - 0.15;
 				transfer.intercept = props.intercept;
 			}
 
