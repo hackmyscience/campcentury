@@ -70,9 +70,13 @@ var Choice = function (options) {
 
 	target.source = scale;
 
-	window.addEventListener('mousemove', mouseMove, false);
-
 	return {
+		start: function () {
+			window.addEventListener('mousemove', mouseMove, false);
+		},
+		end: function () {
+			window.removeEventListener('mousemove', mouseMove, false);
+		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
 				node.width = width;

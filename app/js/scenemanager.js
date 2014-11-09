@@ -9,6 +9,7 @@
 			resize,
 			destroy,
 			render,
+			fade,
 			isActive = false,
 			width = 0,
 			height = 0;
@@ -20,6 +21,7 @@
 		start = scene.start || function () {};
 		stop = scene.stop || function () {};
 		resize = scene.resize || function () {};
+		fade = scene.fade || function () {};
 		destroy = scene.destroy || function () {};
 
 		Object.defineProperty(this, 'id', {
@@ -53,6 +55,7 @@
 		};
 
 		this.render = render.bind(this);
+		this.fade = fade.bind(this);
 
 		this.resize = function (w, h) {
 			if (w !== width || h !== height) {
@@ -96,11 +99,12 @@
 				options = null;
 			}
 
-			if (typeof scene === 'function' ||
-					typeof scene === 'object' && !(scene instanceof Scene)) {
+			if (typeof scene === 'function') {
 				scene = new Scene(scene, options);
 			} else if (scenes.indexOf(scene) >= 0) {
 				return;
+			} else if (!(scene instanceof Scene)) {
+				throw 'SceneManager needs a scene or a function';
 			}
 
 			if (index === undefined || index >= scenes.length || index < 0) {

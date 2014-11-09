@@ -35,7 +35,7 @@ var Snow = function (options) {
 			intercept: [1, 1, 1, 1],
 			mapScale: [0, 0]
 		},
-		introText = $("#slide-1 .title")[0];
+		introText = $("#intro .title")[0];
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
@@ -48,7 +48,7 @@ var Snow = function (options) {
 
 		//x, istart, istop, ostart, ostop
 
-		var textX = normalize(x, 0, window.innerWidth, -10, 10);
+		var textX = normalize(window.innerWidth - x, 0, window.innerWidth, -10, 10);
 
 		introText.style.transform = "translate("+(-(window.innerWidth/2) + textX)+"px, "+(-40)+"px)";
 	}
@@ -111,9 +111,13 @@ var Snow = function (options) {
 
 	target.source = blend; //blend;
 
-	window.addEventListener('mousemove', mouseMove, false);
-
 	return {
+		start: function () {
+			window.addEventListener('mousemove', mouseMove, false);
+		},
+		end: function () {
+			window.removeEventListener('mousemove', mouseMove, false);
+		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
 				node.width = width;
