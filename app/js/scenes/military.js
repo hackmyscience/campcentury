@@ -71,7 +71,7 @@ var Military = function (options) {
 
 	simplex = new SimplexNoise();
 
-	audio = new AudioLoop('audio/ccTitleAudio.mp3');
+	audio = new AudioLoop('audio/ccExtraFlicker.mp3');
 
 	window.addEventListener('mousemove', mouseMove, false);
 
