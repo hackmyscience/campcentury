@@ -1,6 +1,6 @@
 var Sociological = function (options) {
 	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
-		PAN_AMOUNT = 0.05,
+		PAN_AMOUNT = 0,
 		VERTICAL_DISPLACE = 0.3,
 		TRANSITION_TIME = 0.75,
 
@@ -23,8 +23,9 @@ var Sociological = function (options) {
 			mapScale: [0, 0]
 		},
 		isMuted = false,
-
-		audio;
+		audio,
+		lateralText = $("#sociological .lateral-text"),
+		lateralMenu = $("#sociological .lateral-menu");
 
 	
 
@@ -36,6 +37,20 @@ var Sociological = function (options) {
 		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
 
 		displace.mapScale = props.mapScale;
+
+		var deg = Math.min(90, Math.max(0, normalize(x, 250, (window.innerWidth/2), 0, 90)));
+		var opacity = Math.min(1, Math.max(0, normalize(x, 250, (window.innerWidth/2), 1, 0)));
+		lateralText.css({
+			'transform': 'rotate3d(0, 1, 0, '+deg+'deg) translateY(-50%)',
+			'opacity': opacity
+		});
+
+		deg = Math.min(90, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 90, 0)));
+		opacity = Math.min(1, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 0, 1)));
+		lateralMenu.css({
+			'transform': 'rotate3d(0, 1, 0, '+(-deg)+'deg) translateY(-50%)',
+			'opacity': opacity
+		});
 	}
 
 	seriously = new Seriously();

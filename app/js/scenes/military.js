@@ -24,7 +24,9 @@ var Military = function (options) {
 		},
 		isMuted = false,
 
-		audio;
+		audio,
+		lateralText = $("#military .lateral-text"),
+		lateralMenu = $("#military .lateral-menu");
 
 	
 
@@ -36,6 +38,20 @@ var Military = function (options) {
 		props.mapScale[1] = VERTICAL_DISPLACE * (DISPLACE_AMOUNT * 2 * (y / window.innerHeight - 0.5));
 
 		displace.mapScale = props.mapScale;
+
+		var deg = Math.min(90, Math.max(0, normalize(x, 250, (window.innerWidth/2), 0, 90)));
+		var opacity = Math.min(1, Math.max(0, normalize(x, 250, (window.innerWidth/2), 1, 0)));
+		lateralText.css({
+			'transform': 'rotate3d(0, 1, 0, '+deg+'deg) translateY(-50%)',
+			'opacity': opacity
+		});
+
+		deg = Math.min(90, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 90, 0)));
+		opacity = Math.min(1, Math.max(0, normalize(x, (window.innerWidth/2), window.innerWidth, 0, 1)));
+		lateralMenu.css({
+			'transform': 'rotate3d(0, 1, 0, '+(-deg)+'deg) translateY(-50%)',
+			'opacity': opacity
+		});
 	}
 
 	seriously = new Seriously();

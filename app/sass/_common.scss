@@ -10,6 +10,7 @@ body {
 	height: 100%;
 	width: 100%;
 	overflow: auto;
+	@include perspective( 1000 );
 }
 
 canvas {
@@ -48,5 +49,51 @@ canvas {
 
 	li.sound {
 		background-image: url('../images/ccButtonSound.png');
+	}
+}
+
+
+.lateral-text {
+	position: absolute;
+	color: #fff;
+	@include opacity(0);
+	@include size(line-height, 23);
+	@include size(font-size, 17);
+	@include size(width, 360);
+	@include center_y;
+	@include size(left, 30);
+	
+	@include rotate3d(0, 1, 0, 0deg);
+	@include transform-origin(0, 0);
+}
+
+.lateral-menu {
+	@include rotate3d(0, 1, 0, 0deg);
+	@include transform-origin(40px, 0);
+	@include size(right, 30);
+	@include center_y;
+	@include opacity(0);
+
+	li {
+		background-size: 100%;
+		cursor: pointer;
+		@include opacity(0.5);
+		@include square(40);
+		@include transition(opacity 0.3s);
+		cursor: pointer;
+
+		&:hover {
+			@include opacity(0.8);
+		}
+	}
+
+	.map {
+		background-image: url('../images/ccChaptersMapicon.png');
+	}
+	.photo {
+		background-image: url('../images/ccChaptersPhotoicon.png');
+	}
+	.video {
+		background-image: url('../images/ccChaptersVideoicon.png');
 	}
 }
