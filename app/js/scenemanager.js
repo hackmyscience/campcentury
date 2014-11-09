@@ -18,13 +18,13 @@
 		id = lastId++;
 
 		scene = definition.call(this, options);
-		render = scene.render || function () {};
-		start = scene.start || function () {};
-		stop = scene.stop || function () {};
-		resize = scene.resize || function () {};
-		fadeOut = scene.fadeOut || function () {};
-		muted = scene.muted || function () {};
-		destroy = scene.destroy || function () {};
+		render = (scene.render || function () {}).bind(this);
+		start = (scene.start || function () {}).bind(this);
+		stop = (scene.stop || function () {}).bind(this);
+		resize = (scene.resize || function () {}).bind(this);
+		fadeOut = (scene.fadeOut || function () {}).bind(this);
+		muted = (scene.muted || function () {}).bind(this);
+		destroy = (scene.destroy || function () {}).bind(this);
 
 		Object.defineProperty(this, 'id', {
 			configurable: true,
@@ -82,6 +82,7 @@
 			activeScenes = {},
 			width = 0,
 			height = 0,
+			muted = false,
 			auto = false;
 
 		function findScene(index) {
@@ -121,6 +122,12 @@
 				scenes.push(scene);
 			} else {
 				scenes.splice(index, 0, scene);
+			}
+
+			if (muted) {
+				scene.mute();
+			} else {
+				scene.unMute();
 			}
 
 			return this;
@@ -230,6 +237,24 @@
 				*/
 			}
 		};
+
+		this.mute = function () {
+			muted = true;
+			scenes.forEach(function (scene) {
+				scene.mute();
+			});
+		};
+
+		this.unMute = function () {
+			muted = false;
+			scenes.forEach(function (scene) {
+				scene.unMute();
+			});
+		};
+
+		this.muted = function () {
+			return muted;
+		}
 
 		this.resize(inintialWidth || 0, initialHeight || 0);
 	}

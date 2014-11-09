@@ -92,7 +92,11 @@ function ready(){
 		scrolling.jumpTo(1);
 	});
 	$("#menu .sound").on('click', function(){
-		//todo - disable sound
+		if (manager.muted()) {
+			manager.unMute();
+		} else {
+			manager.mute();
+		}
 	});
 }
 
