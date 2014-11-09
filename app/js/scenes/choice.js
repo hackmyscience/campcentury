@@ -2,6 +2,7 @@ var Choice = function (options) {
 	var DISPLACE_AMOUNT = 0.2, // 0.12 is a good amount, but making it higher for demo
 		PAN_AMOUNT = 0.05,
 		VERTICAL_DISPLACE = 0.3,
+		TRANSITION_TIME = 0.75,
 
 		totalOffset = 2 * (0.03 + PAN_AMOUNT + DISPLACE_AMOUNT),
 
@@ -18,11 +19,12 @@ var Choice = function (options) {
 		resizables = [],
 
 		//state variables
-		lastRender = 0,
-		start = Date.now() / 1000,
 		props = {
 			mapScale: [0, 0]
-		};
+		},
+		isMuted = false,
+
+		audio;
 
 
 	$("#choice .changeFill").on('mouseenter', function(){
@@ -79,12 +81,26 @@ var Choice = function (options) {
 
 	target.source = scale;
 
+	audio = new AudioLoop('audio/ccTitleAudio.mp3');
+
 	return {
 		start: function () {
 			window.addEventListener('mousemove', mouseMove, false);
+			audio.load();
+			if (!isMuted) {
+				audio.gain(0.5, TRANSITION_TIME);
+			}
+		},
+		fadeOut: function () {
+			audio.gain(0, TRANSITION_TIME);
+		},
+		muted: function (muted) {
+			isMuted = !!muted;
+			audio.gain(isMuted ? 0 : 0.5);
 		},
 		stop: function () {
 			window.removeEventListener('mousemove', mouseMove, false);
+			audio.gain(0);
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
@@ -94,7 +110,6 @@ var Choice = function (options) {
 		},
 		render: function () {
 			seriously.render();
-			//lastRender = Date.now();
 		}
 	};
 };
