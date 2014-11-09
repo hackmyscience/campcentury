@@ -1,4 +1,4 @@
-#slide-1 {
+#intro {
 	background-color: #fff;
 
 	.title {
@@ -9,6 +9,28 @@
 		color: #fff;
 		width: 100%;
 		font-family: 'Merriweather';
+	}
+
+	.scrollMouse {
+		@include size(width, 25);
+		@include size(height, 40);
+		@include center_x;
+		@include size(bottom, 75);
+		@include transition(opacity 0.3s);
+		display: block;
+		background-image: url('../images/mouse.png');
+	}
+
+	.scrollKeyboard {
+		@include size(width, 54);
+		@include size(height, 35);
+		@include center_x;
+		@include size(bottom, 75);
+		@include transition(opacity 0.3s);
+		display: block;
+		background-image: url('../images/keyboard.png');
+
+		@include opacity(0);
 	}
 
 	.scrolldownArea {
@@ -31,7 +53,9 @@
 		}
 	}
 
+
 }
+
 
 @include keyframes(pulsebottom) {
     0% {

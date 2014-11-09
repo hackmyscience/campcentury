@@ -5,10 +5,6 @@ var Scrolling = function(slides){
 	this.canScroll = false;
 
 	this.add = function(id, index){
-		if(index == this.currentSlide){
-			return false; //todo: allow to remove the current slide
-		}
-
 		if(!index) {
 			index = this.slides.length;
 		}

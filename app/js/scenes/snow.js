@@ -35,7 +35,25 @@ var Snow = function (options) {
 			intercept: [1, 1, 1, 1],
 			mapScale: [0, 0]
 		},
-		introText = $("#slide-1 .title")[0];
+		introText = $("#intro .title")[0],
+		instructions = $("#intro .instruction"),
+		currentInstruction = 0;
+
+
+	window.setInterval(function(){
+		if(currentInstruction >= instructions.length) {
+			currentInstruction = 0;
+		}
+
+		instructions.css('opacity', 0);
+		instructions.eq(currentInstruction).css('opacity', 1);
+
+		currentInstruction++;
+	}, 2000);
+
+	$("#intro .scrolldownArea").on('click', function(){
+		scrolling.goNext();
+	});
 
 	function mouseMove(evt) {
 		var x = evt.pageX,
@@ -48,7 +66,7 @@ var Snow = function (options) {
 
 		//x, istart, istop, ostart, ostop
 
-		var textX = normalize(x, 0, window.innerWidth, -10, 10);
+		var textX = normalize(window.innerWidth - x, 0, window.innerWidth, -10, 10);
 
 		introText.style.transform = "translate("+(-(window.innerWidth/2) + textX)+"px, "+(-40)+"px)";
 	}
@@ -111,9 +129,13 @@ var Snow = function (options) {
 
 	target.source = blend; //blend;
 
-	window.addEventListener('mousemove', mouseMove, false);
-
 	return {
+		start: function () {
+			window.addEventListener('mousemove', mouseMove, false);
+		},
+		end: function () {
+			window.removeEventListener('mousemove', mouseMove, false);
+		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
 				node.width = width;
@@ -135,9 +157,9 @@ var Snow = function (options) {
 			if (revealRemaining && lastRender) {
 				revealRemaining = Math.max(0, revealRemaining -  (now - lastRender) / FADE_DURATION);
 				//console.log(now, lastRender, now - lastRender, revealRemaining);
-				props.intercept[0] = revealRemaining;
-				props.intercept[1] = revealRemaining;
-				props.intercept[2] = revealRemaining;
+				props.intercept[0] = revealRemaining * 1.15 - 0.15;
+				props.intercept[1] = revealRemaining * 1.15 - 0.15;
+				props.intercept[2] = revealRemaining * 1.15 - 0.15;
 				transfer.intercept = props.intercept;
 			}
 
