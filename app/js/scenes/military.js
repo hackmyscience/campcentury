@@ -91,6 +91,7 @@ var Military = function (options) {
 		},
 		stop: function () {
 			audio.gain(0);
+			seriously.purge();
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {

@@ -153,6 +153,7 @@ var Snow = function (options) {
 			//window.removeEventListener('mousemove', mouseMove, false);
 			window.clearInterval(rotateIconInterval);
 			audio.gain(0);
+			seriously.purge();
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {

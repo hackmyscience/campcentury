@@ -97,6 +97,7 @@ var Sociological = function (options) {
 		stop: function () {
 			//window.removeEventListener('mousemove', mouseMove, false);
 			audio.gain(0);
+			seriously.purge();
 		},
 		resize: function (width, height) {
 			resizables.forEach(function (node) {
