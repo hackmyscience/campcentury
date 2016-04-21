@@ -1,0 +1,32 @@
+#How to start a new repo
+-git init // initialize folder as git repository 
+-git add fileName // adds files to staging enviroment
+-git add . // add changes to staging enviromnent
+-git commit -m "revision ##"
+-git status // what is the status of your repo 
+-git log // data with commit messages
+
+# Getting things in/out of Staging que
+-git reset HEAD fileName // replaces what's in staging with what's in working envir
+-git checkout filename // reverts to prevoius standing version
+-git clone URL // to clone a repository
+-git clone -b branchName URL // clone a branch of a git project
+
+#Creatiing a remote repo
+-git remote // returns all the github repos it knows about 
+- git remote add origin URLpath
+-git remote rm origin
+
+#Push branch code to remote repo 
+-git branch // assess what branches are in the project
+-git push -u origin branchName // branchName ex master
+
+
+
+UNIX COMMANDS
+pwd // present working directory
+mkdir folderName // make a new folder in pwd
+rm -r folderName // delete folder
+ls -la // see all files with hidden ones
+rm -dfr .git // recursive deletes git repo structure whereby creating a clean template
+clear // clears the console

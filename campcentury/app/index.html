@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Camp Century</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE-edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+		<script src="js/vendors.head.js"></script>
+		<link rel="stylesheet" href="css/main.css">
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700|Quicksand:300,400,700|Merriweather:700" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+
+		<div id="loading">
+			<div class="loader"></div>
+		</div>
+
+		<ul id="menu">
+			<li class="home"></li>
+			<li class="word"></li>
+			<li class="sound"></li>
+			<li class="fullscreen"></li>
+		</ul>
+		
+		<div id="scrolling">
+			<section class="current" id="intro">
+				
+				<div class="title">
+					<h1>Camp Century.</h1>
+					<h2>the city under the ice.</h2>
+				</div>
+				
+				<div class="scroll-stuff">
+					<div class="instruction scrollMouse"></div>
+					<div class="instruction scrollKeyboard"></div>
+
+					<div class="scrolldownArea">
+						<span></span>
+					</div>
+				</div>
+			</section>
+
+			<section id="choice">
+				
+				<div class="text">
+					
+						Camp Century was a 
+						<div class="fill fill-1">
+							<span class="word-1">scientific experiment</span>
+							<span class="word-2">military experiment</span>
+							<span class="word-3">sociological experiment</span>
+						</div>
+						to
+						<div class="fill fill-2">
+							<span class="word-1">conduct climate research</span>
+							<span class="word-2">protect American interests</span>
+							<span class="word-3">explore human psychology</span>
+						</div>
+						through
+						<div class="fill fill-3">
+							<span class="word-1">ice core drilling</span>
+							<span class="word-2">nuclear missile defence</span>
+							<span class="word-3">underground confinement</span>
+						</div>
+					
+				</div>
+
+				<ul class="choices">
+					<li class="changeFill" data-n="1" data-scene="science"><span></span></li>
+					<li class="changeFill" data-n="2" data-scene="military"><span></span></li>
+					<li class="changeFill" data-n="3" data-scene="sociological"><span></span></li>
+				</ul>
+			</section>
+			
+
+			<section id="science">
+				<canvas id="science-canvas"></canvas>
+				<div class="lateral-text">
+					The official purpose of Camp Century was ice core drilling, and its data is still regularly cited in scientific journals on climatology today. 
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+			<section id="science2">
+				<div class="lateral-text">
+					The official purpose of Camp Century was ice core drilling, and its data is still regularly cited in scientific journals on climatology today. 
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+			<section id="military">
+				<div class="lateral-text">
+					In 1950, The U.S. Army started a covert project to build a series of underground rocket-launch sites, under the ice of Greenland.
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+			<section id="military2">
+				<div class="lateral-text">
+					In 1950, The U.S. Army started a covert project to build a series of underground rocket-launch sites, under the ice of Greenland.
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+			
+
+			<section id="sociological">
+				<div class="lateral-text">
+					These sites were manned by up to 200 men at any one time, and powered by a nuclear reactor. The research about group dynamics and team building were revolutionary for the time.
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+			<section id="sociological2">
+				<div class="lateral-text">
+					These sites were manned by up to 200 men at any one time, and powered by a nuclear reactor. The research about group dynamics and team building were revolutionary for the time.
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+
+			<section id="end">
+				<div class="lateral-text">
+					End. ©
+				</div>
+				<ul class="lateral-menu">
+					<li class="map"></li>
+					<li class="photo"></li>
+					<li class="video"></li>
+				</ul>
+			</section>
+
+		</div>
+
+
+		<div id="image-textures">
+			<img src="images/ccTitleBackgroundCropped.jpg" id="title-image" />
+			<img src="images/ccTitleBackgroundDepth.jpg" id="title-depth" />
+
+			<img src="images/ccChoiceBackground.jpg" id="choice-image" />
+			<img src="images/ccChoiceDepth.png" id="choice-depth" />
+
+			<img src="images/ccChaptersLeft.jpg" id="science-image" />
+			<img src="images/cc_ChaptersRightDepth.jpg" id="science-depth" />
+
+			<img src="images/ccChaptersMiddle.jpg" id="military-image" />
+			<img src="images/cc_ChaptersRightDepth.jpg" id="military-depth" />
+
+			<img src="images/cc_ChaptersRight.jpg" id="sociological-image" />
+			<img src="images/cc_ChaptersRightDepth.jpg" id="sociological-depth" />
+		</div>
+		<audio id="music" preload="metadata">
+			<source src="audio/ccMusic230mins.mp3" type="audio/mp3" />
+		</audio>
+	
+		<script src="js/vendors.foot.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
